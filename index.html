@@ -3,523 +3,1093 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080808">
 <title>مؤشر أذون الخزانة | جروب عملاء البنوك المصرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#080808;
-  --panel:#12120f;
-  --gold:#d9b52e;
-  --light:#f1d86b;
-  --muted:#aaa69a;
-  --line:#4b3d13;
-  --green:#21d88a;
+  --bg:#070707;
+  --panel:#11110f;
+  --gold:#d4af37;
+  --gold-light:#f0d879;
+  --text:#f4f0e6;
+  --muted:#aaa69b;
+  --green:#35d28a;
   --red:#ff7777;
 }
 * { box-sizing:border-box; }
-html,body {
-  margin:0; min-height:100%; width:100%;
-  background:#000; color:#f5f1e7;
-  font-family:Tahoma,Arial,sans-serif;
+
+html {
+  min-height:100%;
+  background:var(--bg);
+  scroll-behavior:smooth;
 }
-body { padding:7px; line-height:1.45; }
+
+body {
+  margin:0;
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Cairo',sans-serif;
+  overflow-x:hidden;
+}
+
 button { font:inherit; cursor:pointer; }
+
 .app {
-  max-width:520px; width:100%;
-  min-height:calc(100dvh - 14px);
-  margin:auto; background:var(--bg);
-  border:2px solid var(--gold);
-  border-radius:20px; overflow:hidden;
-  display:flex; flex-direction:column;
+  width:100%;
+  max-width:760px;
+  min-height:100vh;
+  margin:0 auto;
+  border-inline:2px solid var(--gold);
+  background:#0a0a0a;
+  display:flex;
+  flex-direction:column;
 }
-.header {
-  display:flex; justify-content:center; align-items:center;
-  text-align:center; min-height:82px;
-  padding:12px 8px; border-bottom:1px solid #352b10;
+
+.topbar {
+  position:relative;
+  min-height:104px;
+  padding:15px 18px;
+  border-bottom:1px solid #392f17;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.brand { font-size:clamp(20px,5vw,26px); font-weight:800; color:var(--light); }
-.sub { font-size:12px; color:var(--muted); margin-top:3px; }
+
+.brand-mark {
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  width:62px;
+  height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-mark img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-copy {
+  width:100%;
+  text-align:center;
+  padding:0 70px;
+}
+
+.brand-title {
+  color:var(--gold-light);
+  font-size:1.2rem;
+  font-weight:800;
+  line-height:1.6;
+}
+
+.brand-sub {
+  color:var(--muted);
+  font-size:.76rem;
+}
+
 .status {
-  position:absolute; left:14px; top:100px;
-  font-size:10px; color:var(--green);
+  position:absolute;
+  left:12px;
+  bottom:12px;
+  color:var(--green);
+  font-size:.65rem;
+  white-space:nowrap;
 }
-main { padding:10px 9px; flex:1; min-height:0; }
+
+main {
+  flex:1;
+  padding:14px;
+}
+
 .page { display:none; }
 .page.active { display:block; }
-.actions {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:7px; margin-bottom:12px;
+
+.hero {
+  padding:16px 4px 12px;
+  text-align:center;
 }
-.btn,.term {
-  border:1px solid var(--line); background:#141414;
-  color:var(--light); border-radius:10px;
-  font-weight:700; padding:9px 4px; min-width:0;
+
+.eyebrow {
+  color:var(--muted);
+  font-size:.76rem;
 }
-.btn { min-height:42px; }
-.btn.secondary { color:#eee; }
-.heading {
-  display:flex; align-items:center; justify-content:space-between;
-  gap:6px; margin:12px 0 9px; padding-right:9px;
+
+.hero h1 {
+  color:var(--gold-light);
+  font-size:clamp(1.25rem,4.5vw,1.85rem);
+  line-height:1.7;
+  margin:8px 0;
+}
+
+.hero p {
+  color:#c1bdb2;
+  font-size:.79rem;
+  line-height:1.9;
+  margin:0;
+}
+
+.stat-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin:12px 0 20px;
+}
+
+.stat {
+  background:#11110f;
+  border:1px solid #4a3b18;
+  border-radius:13px;
+  padding:12px 8px;
+  text-align:center;
+  min-width:0;
+}
+
+.stat label {
+  display:block;
+  color:var(--muted);
+  font-size:.72rem;
+  line-height:1.8;
+}
+
+.stat strong {
+  display:block;
+  color:var(--gold-light);
+  font-size:clamp(.85rem,3.5vw,1.15rem);
+  margin-top:5px;
+  overflow-wrap:anywhere;
+}
+
+.section-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin:15px 0 11px;
+}
+
+.section-head h2 {
+  margin:0;
+  font-size:.96rem;
   border-right:4px solid var(--gold);
-  font-size:18px; font-weight:800;
+  padding-right:9px;
 }
-.note { font-size:10px; color:var(--muted); font-weight:400; }
-.terms {
-  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:7px; margin:10px 0 12px;
+
+.small-muted {
+  color:var(--muted);
+  font-size:.66rem;
 }
-.term { min-height:40px; font-size:13px; }
-.term.active { background:var(--gold); color:#111; border-color:var(--light); }
-.table-card {
-  border:1px solid var(--line); border-radius:14px;
-  overflow:hidden; background:#090909;
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
 }
-.table-title {
-  display:flex; justify-content:space-between; align-items:center;
-  gap:5px; padding:9px 8px; background:#12110d;
-  border-bottom:1px solid #33290f; font-size:13px; font-weight:700;
+
+.nav-card {
+  min-width:0;
+  min-height:102px;
+  padding:12px 8px;
+  border:1px solid #51421b;
+  border-radius:12px;
+  background:linear-gradient(145deg,#17160f,#101010);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:5px;
+  transition:background .2s;
 }
-.count { font-size:10px; color:var(--muted); white-space:nowrap; font-weight:400; }
+
+.nav-card:active { background:#28210e; }
+
+.nav-card .symbol {
+  color:var(--gold-light);
+  font-size:1.25rem;
+  line-height:1.4;
+}
+
+.nav-card strong {
+  font-size:.81rem;
+  line-height:1.7;
+}
+
+.nav-card small {
+  color:var(--muted);
+  font-size:.66rem;
+  line-height:1.7;
+}
+
+.back-row {
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.btn {
+  padding:8px 12px;
+  border:1px solid var(--gold);
+  border-radius:9px;
+  background:#19160c;
+  color:var(--gold-light);
+  font-size:.75rem;
+  font-weight:700;
+}
+
+.btn.ghost {
+  background:#141414;
+  border-color:#514b3a;
+  color:#eee9de;
+}
+
+.back-row .btn { flex:1; }
+
+.term-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  margin:12px 0;
+}
+
+.term-btn {
+  min-width:0;
+  padding:9px 3px;
+  border:1px solid #6b5620;
+  border-radius:9px;
+  background:#141414;
+  color:var(--gold-light);
+  font-size:.79rem;
+  font-weight:700;
+}
+
+.term-btn.active {
+  background:var(--gold);
+  color:#080808;
+}
+
+.panel {
+  margin:10px 0 14px;
+  border:1px solid #493b19;
+  border-radius:12px;
+  overflow:hidden;
+  background:#090909;
+}
+
+.panel-title {
+  padding:10px;
+  background:#15130d;
+  border-bottom:1px solid #3b3016;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
+  font-size:.79rem;
+  font-weight:700;
+}
+
 .table-scroll {
-  height:clamp(245px,40dvh,360px);
-  overflow-y:auto; overflow-x:hidden;
-  overscroll-behavior:contain;
-  scrollbar-width:thin; scrollbar-color:#80691d #111;
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  overflow-y:visible;
 }
-table { width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
+
+table {
+  width:100%;
+  table-layout:fixed;
+  border-collapse:collapse;
+  text-align:center;
+  font-size:clamp(.57rem,2.15vw,.74rem);
+}
+
 th {
-  position:sticky; top:0; z-index:1;
-  background:#17150d; color:var(--light);
-  font-size:clamp(9px,2.7vw,12px);
-  padding:8px 1px; border-bottom:1px solid #6c5718;
-  line-height:1.35; overflow-wrap:anywhere;
+  background:#16265b;
+  color:#fff;
+  padding:9px 2px;
+  font-size:inherit;
+  font-weight:700;
+  line-height:1.65;
+  overflow-wrap:anywhere;
 }
+
 td {
-  font-size:clamp(9px,2.75vw,12px);
-  padding:9px 1px; border-bottom:1px solid #24221b;
-  line-height:1.35; overflow-wrap:anywhere;
+  padding:9px 2px;
+  border-top:1px solid #29261f;
+  color:#e9e4d9;
+  line-height:1.7;
+  overflow-wrap:anywhere;
+  word-break:normal;
 }
-th,td { width:25%; }
-td.session { color:var(--light); font-weight:700; }
-td.yield { color:var(--green); font-weight:800; }
-.message { padding:20px 6px; color:var(--muted); font-size:12px; text-align:center; }
-.message.error { color:var(--red); }
-.ad {
-  margin:11px 0 8px; min-height:50px;
-  border:1px dashed #4b4532; border-radius:10px;
-  display:flex; align-items:center; justify-content:center;
-  text-align:center; color:#827d70; font-size:11px; padding:7px;
+
+td:first-child {
+  color:var(--gold-light);
+  font-weight:700;
 }
+
+td:last-child {
+  color:var(--green);
+  font-weight:800;
+}
+
+.empty,.loading,.error {
+  padding:17px 8px;
+  text-align:center;
+  font-size:.75rem;
+  line-height:1.9;
+  color:var(--muted);
+}
+
+.error { color:var(--red); }
+
+.history-intro {
+  color:var(--muted);
+  font-size:.75rem;
+  line-height:1.9;
+  margin:4px 0 12px;
+}
+
+.history-card {
+  width:100%;
+  border:1px solid #59471b;
+  border-radius:11px;
+  background:linear-gradient(145deg,#17160f,#101010);
+  color:var(--text);
+  padding:13px;
+  margin-bottom:9px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  text-align:right;
+}
+
+.history-card strong {
+  display:block;
+  color:var(--gold-light);
+  font-size:.88rem;
+}
+
+.history-card small {
+  display:block;
+  color:var(--muted);
+  font-size:.68rem;
+  margin-top:3px;
+}
+
+.history-arrow {
+  color:var(--gold-light);
+  font-size:1.15rem;
+}
+
+.record-count {
+  color:var(--muted);
+  font-size:.68rem;
+  white-space:nowrap;
+}
+
+.note {
+  margin:10px 0;
+  padding:10px;
+  border-right:3px solid var(--gold);
+  border-radius:7px;
+  background:#13120e;
+  color:#c6c1b5;
+  font-size:.72rem;
+  line-height:1.9;
+}
+
+.guide-list {
+  display:grid;
+  gap:8px;
+}
+
+.guide-item {
+  padding:11px;
+  border:1px solid #40351b;
+  border-radius:10px;
+  background:#101010;
+}
+
+.guide-item h3 {
+  margin:0 0 5px;
+  color:var(--gold-light);
+  font-size:.82rem;
+}
+
+.guide-item p {
+  margin:0;
+  color:#c8c3b7;
+  font-size:.74rem;
+  line-height:1.9;
+}
+
+.ad-slot {
+  min-height:50px;
+  margin:8px 12px 10px;
+  padding:7px;
+  border:1px dashed #4b4638;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#827d70;
+  font-size:.66rem;
+}
+
 .footer {
-  text-align:center; border-top:1px solid #352b10; padding:9px;
+  padding:9px 10px;
+  text-align:center;
+  border-top:1px solid #332a12;
 }
-.footer strong { font-size:14px; color:var(--light); }
-.developer { font-size:10px; color:#8e8a80; margin-top:3px; }
-.nav {
-  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:3px; border-top:1px solid #352b10; padding:6px;
+
+.footer-brand {
+  color:var(--gold-light);
+  font-size:.79rem;
+  font-weight:800;
 }
-.nav button {
-  background:transparent; color:#aaa394; border:0;
-  border-radius:10px; padding:6px 1px; font-size:10px; min-height:54px;
+
+.developer {
+  color:#898579;
+  font-size:.63rem;
 }
-.nav button span { display:block; font-size:18px; margin-bottom:2px; }
-.nav button.active { background:#211b08; color:var(--light); }
-.intro { text-align:center; padding:12px 2px 16px; }
-.intro h1 { font-size:clamp(21px,6vw,29px); color:var(--light); margin:4px 0 7px; }
-.intro p { color:var(--muted); font-size:12px; margin:0; }
-.stats,.home-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; }
-.stat,.home-card,.info-card {
-  border:1px solid var(--line); border-radius:12px;
-  background:var(--panel); padding:12px 9px; min-width:0;
+
+.bottom-nav {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:3px;
+  padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+  border-top:1px solid #302711;
+  background:#0a0a0a;
 }
-.stat { text-align:center; }
-.stat-label { font-size:10px; color:var(--muted); }
-.stat-value { font-size:16px; font-weight:800; color:var(--light); margin-top:5px; overflow-wrap:anywhere; }
-.home-card { color:#f5f1e7; text-align:center; min-height:78px; }
-.home-card strong { display:block; color:var(--light); font-size:13px; margin-bottom:5px; }
-.home-card small { display:block; color:var(--muted); font-size:10px; }
-.info-card { margin:8px 0; }
-.info-card h3 { margin:0 0 5px; color:var(--light); font-size:13px; }
-.info-card p { margin:0; font-size:12px; line-height:1.7; }
-.bars { display:grid; gap:10px; padding-top:8px; }
-.bar-row {
-  display:grid; grid-template-columns:70px 1fr 55px;
-  align-items:center; gap:6px; font-size:10px;
+
+.bottom-nav button {
+  min-width:0;
+  padding:7px 2px;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:#aaa497;
+  font-size:.64rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
 }
-.track { height:12px; background:#29251a; border-radius:8px; overflow:hidden; }
-.fill { height:100%; background:var(--gold); border-radius:8px; }
+
+.bottom-nav button span { font-size:1rem; }
+
+.bottom-nav button.active {
+  color:var(--gold-light);
+  background:#241e0c;
+}
+
+.chart-row {
+  display:grid;
+  grid-template-columns:65px minmax(0,1fr) 68px;
+  gap:6px;
+  align-items:center;
+  margin:12px 0;
+  font-size:.67rem;
+}
+
+.bar-track {
+  height:10px;
+  overflow:hidden;
+  background:#28251d;
+  border-radius:20px;
+}
+
+.bar {
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#9b7922,var(--gold-light));
+}
+
+.chart-value {
+  text-align:left;
+  color:var(--green);
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+
+@media(min-width:600px) {
+  main { padding:18px; }
+  .nav-card { min-height:110px; }
+  .table-scroll { overflow-x:visible; }
+  table { font-size:.76rem; }
+}
+
 @media(max-width:360px) {
-  body { padding:3px; }
-  .app { min-height:calc(100dvh - 6px); border-radius:16px; }
-  main { padding:8px 6px; }
-  .header { min-height:76px; }
-  .term { font-size:12px; }
-  .heading { font-size:16px; }
-  .table-title { font-size:11px; padding:8px 6px; }
-  .table-scroll { height:clamp(225px,38dvh,320px); }
+  .topbar { min-height:90px; padding:10px; }
+  .brand-mark { width:48px; height:48px; right:9px; }
+  .brand-copy { padding:0 51px; }
+  .brand-title { font-size:1rem; }
+  .brand-sub { font-size:.65rem; }
+  .status { left:7px; font-size:.58rem; }
+  main { padding:10px; }
+  .nav-card { min-height:94px; padding:9px 5px; }
+  .nav-card strong { font-size:.75rem; }
+  .nav-card small { font-size:.61rem; }
+  .term-btn { font-size:.71rem; }
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-<header class="header">
-  <div>
-    <div class="brand">مؤشر أذون الخزانة</div>
-    <div class="sub">جروب عملاء البنوك المصرية</div>
+
+<header class="topbar">
+  <div class="brand-mark">
+    <img src="logo.png" alt="شعار جروب عملاء البنوك المصرية"
+      onerror="this.style.visibility='hidden'">
   </div>
-  <div class="status" id="status">● جاري الاتصال</div>
+
+  <div class="brand-copy">
+    <div class="brand-title">مؤشر أذون الخزانة</div>
+    <div class="brand-sub">جروب عملاء البنوك المصرية</div>
+  </div>
+
+  <div id="connection-status" class="status">● جاري الاتصال</div>
 </header>
 
 <main>
-<section class="page active" id="home">
-  <div class="intro">
+
+<!-- الرئيسية -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="eyebrow">متابعة نتائج العطاءات الرسمية</div>
     <h1>مؤشرات أذون الخزانة المصرية</h1>
-    <p>متابعة نتائج العطاءات والعوائد والآجال من بيانات المصدر</p>
+    <p>نتائج الآجال والعوائد وفق البيانات المنشورة بالمصدر.</p>
   </div>
-  <div class="stats">
+
+  <div class="stat-grid">
     <div class="stat">
-      <div class="stat-label">عدد النتائج المحمّلة</div>
-      <div class="stat-value" id="total">—</div>
+      <label>عدد النتائج المحمّلة</label>
+      <strong id="total-count">—</strong>
     </div>
     <div class="stat">
-      <div class="stat-label">أحدث تاريخ جلسة</div>
-      <div class="stat-value" id="latest">—</div>
+      <label>آخر تاريخ جلسة مسجل</label>
+      <strong id="latest-session">—</strong>
     </div>
   </div>
-  <div class="heading">أقسام التطبيق</div>
-  <div class="home-grid">
-    <button class="home-card" onclick="go('indicator','indicator')">
-      <strong>المؤشر العام</strong><small>أحدث النتائج حسب الأجل</small>
+
+  <div class="section-head">
+    <h2>أقسام التطبيق</h2>
+  </div>
+
+  <div class="grid">
+    <button class="nav-card" onclick="showPage('indicator')">
+      <span class="symbol">▤</span>
+      <strong>المؤشر العام</strong>
+      <small>نتائج العطاءات حسب الأجل</small>
     </button>
-    <button class="home-card" onclick="go('history','history')">
-      <strong>البيانات التاريخية</strong><small>سجل مستقل لكل أجل</small>
+
+    <button class="nav-card" onclick="showPage('history')">
+      <span class="symbol">▥</span>
+      <strong>البيانات التاريخية</strong>
+      <small>سجلات مستقلة لكل أجل</small>
     </button>
-    <button class="home-card" onclick="go('analytics','analytics')">
-      <strong>عرض البيانات التاريخية</strong><small>مقارنات من البيانات المنشورة</small>
+
+    <button class="nav-card" onclick="showPage('guide')">
+      <span class="symbol">ⓘ</span>
+      <strong>دليل تواريخ الأذون</strong>
+      <small>شرح الجلسة والإصدار والاستحقاق</small>
     </button>
-    <button class="home-card" onclick="go('guide','guide')">
-      <strong>دليل تواريخ الأذون</strong><small>شرح الجلسة والإصدار والاستحقاق</small>
+
+    <button class="nav-card" onclick="refreshData()">
+      <span class="symbol">↻</span>
+      <strong>تحديث البيانات</strong>
+      <small>جلب أحدث البيانات المنشورة</small>
     </button>
   </div>
-  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
 
-<section class="page" id="indicator">
-  <div class="actions">
-    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
-    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
+<!-- المؤشر العام -->
+<section class="page" id="page-indicator">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+    <button class="btn" onclick="refreshData()">↻ تحديث</button>
   </div>
-  <div class="heading"><span>المؤشر العام</span><span class="note" id="updated">—</span></div>
-  <div class="terms" id="terms-main"></div>
-  <div class="table-card">
-    <div class="table-title">
-      <span id="main-title">سجل النتائج</span><span class="count" id="main-count">0 نتيجة</span>
+
+  <div class="section-head">
+    <h2>المؤشر العام</h2>
+    <span class="small-muted" id="update-time">—</span>
+  </div>
+
+  <div class="term-grid" id="main-terms">
+    <button class="term-btn" onclick="selectTerm('91',this)">91 يوم</button>
+    <button class="term-btn active" onclick="selectTerm('182',this)">182 يوم</button>
+    <button class="term-btn" onclick="selectTerm('273',this)">273 يوم</button>
+    <button class="term-btn" onclick="selectTerm('364',this)">364 يوم</button>
+    <button class="term-btn" onclick="selectTerm('357',this)">357 يوم</button>
+    <button class="term-btn" onclick="selectTerm('other',this)">مدد أخرى</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">
+      <span id="table-heading">سجل نتائج أجل 182 يوم</span>
+      <span class="small-muted" id="row-count">0 نتيجة</span>
     </div>
+
     <div class="table-scroll">
       <table>
-        <thead><tr><th>تاريخ الجلسة</th><th>تاريخ الإصدار</th><th>تاريخ الاستحقاق</th><th>متوسط العائد %</th></tr></thead>
-        <tbody id="main-body"><tr><td colspan="4" class="message">جاري تحميل البيانات...</td></tr></tbody>
+        <thead>
+          <tr>
+            <th>تاريخ الجلسة</th>
+            <th>تاريخ الإصدار</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>متوسط العائد %</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr><td colspan="4" class="loading">جاري جلب البيانات...</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
-  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
+
+  <div class="note">
+    الجدول يعرض السجلات الأحدث أولًا. قد تظهر التواريخ على أكثر من سطر لتناسب عرض شاشة الهاتف.
+  </div>
 </section>
 
-<section class="page" id="history">
-  <div class="actions">
-    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
-    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
+<!-- قائمة البيانات التاريخية -->
+<section class="page" id="page-history">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+    <button class="btn" onclick="refreshData()">↻ تحديث</button>
   </div>
-  <div class="heading">البيانات التاريخية</div>
-  <p class="note" style="white-space:normal">اختر أجلًا لعرض جميع سجلاته المتاحة من المصدر.</p>
-  <div class="terms" id="terms-history"></div>
-  <div class="table-card">
-    <div class="table-title">
-      <span id="history-title">اختر أجلًا</span><span class="count" id="history-count">0 نتيجة</span>
+
+  <div class="section-head">
+    <h2>البيانات التاريخية</h2>
+    <span class="small-muted">اختر الأجل</span>
+  </div>
+
+  <p class="history-intro">
+    اختر مدة الإذن لفتح سجلها التاريخي. تُعرض السجلات المتاحة في المصدر، بحد أقصى 200 سجل لكل صفحة.
+  </p>
+
+  <div id="history-terms">
+    <button class="history-card" onclick="openHistoryTerm('91')">
+      <span><strong>أذون 91 يوم</strong><small id="count-91">جارٍ حساب السجلات</small></span>
+      <span class="history-arrow">←</span>
+    </button>
+
+    <button class="history-card" onclick="openHistoryTerm('182')">
+      <span><strong>أذون 182 يوم</strong><small id="count-182">جارٍ حساب السجلات</small></span>
+      <span class="history-arrow">←</span>
+    </button>
+
+    <button class="history-card" onclick="openHistoryTerm('273')">
+      <span><strong>أذون 273 يوم</strong><small id="count-273">جارٍ حساب السجلات</small></span>
+      <span class="history-arrow">←</span>
+    </button>
+
+    <button class="history-card" onclick="openHistoryTerm('364')">
+      <span><strong>أذون 364 يوم</strong><small id="count-364">جارٍ حساب السجلات</small></span>
+      <span class="history-arrow">←</span>
+    </button>
+
+    <button class="history-card" onclick="openHistoryTerm('357')">
+      <span><strong>أذون 357 يوم</strong><small id="count-357">جارٍ حساب السجلات</small></span>
+      <span class="history-arrow">←</span>
+    </button>
+
+    <button class="history-card" onclick="openHistoryTerm('other')">
+      <span><strong>مدد أخرى</strong><small id="count-other">جارٍ حساب السجلات</small></span>
+      <span class="history-arrow">←</span>
+    </button>
+  </div>
+</section>
+
+<!-- صفحة سجل أجل محدد -->
+<section class="page" id="page-term">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('history')">← الآجال التاريخية</button>
+    <button class="btn" onclick="showPage('home')">الرئيسية</button>
+  </div>
+
+  <div class="section-head">
+    <h2 id="term-page-title">السجل التاريخي</h2>
+    <span class="record-count" id="term-page-count">0 نتيجة</span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">
+      <span>النتائج — الأحدث أولًا</span>
+      <span class="small-muted">حتى 200 سجل</span>
     </div>
+
     <div class="table-scroll">
       <table>
-        <thead><tr><th>تاريخ الجلسة</th><th>تاريخ الإصدار</th><th>تاريخ الاستحقاق</th><th>متوسط العائد %</th></tr></thead>
-        <tbody id="history-body"><tr><td colspan="4" class="message">اختر أجلًا من الأعلى.</td></tr></tbody>
+        <thead>
+          <tr>
+            <th>تاريخ الجلسة</th>
+            <th>تاريخ الإصدار</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>متوسط العائد %</th>
+          </tr>
+        </thead>
+        <tbody id="term-table-body"></tbody>
       </table>
     </div>
   </div>
-  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
 
-<section class="page" id="analytics">
-  <div class="actions">
-    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
-    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
+<!-- الدليل -->
+<section class="page" id="page-guide">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
   </div>
-  <div class="heading">عرض البيانات التاريخية</div>
-  <div class="terms" id="terms-analytics"></div>
-  <div class="table-card">
-    <div class="table-title">
-      <span id="analytics-title">اختر أجلًا للمقارنة</span>
-      <span class="count" id="analytics-count">0 نتيجة</span>
-    </div>
-    <div class="table-scroll">
-      <table>
-        <thead><tr><th>تاريخ الجلسة</th><th>تاريخ الإصدار</th><th>تاريخ الاستحقاق</th><th>متوسط العائد %</th></tr></thead>
-        <tbody id="analytics-body"><tr><td colspan="4" class="message">اختر أجلًا من الأعلى.</td></tr></tbody>
-      </table>
-    </div>
+
+  <div class="section-head">
+    <h2>دليل تواريخ أذون الخزانة</h2>
   </div>
-  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
+
+  <div class="guide-list">
+    <article class="guide-item">
+      <h3>تاريخ الجلسة</h3>
+      <p>تاريخ انعقاد العطاء الذي تُعلن فيه العروض ونتائج القبول والعائد.</p>
+    </article>
+
+    <article class="guide-item">
+      <h3>تاريخ الإصدار</h3>
+      <p>التاريخ المحدد لإصدار أذون الخزانة وفق بيانات العطاء المنشورة.</p>
+    </article>
+
+    <article class="guide-item">
+      <h3>تاريخ الاستحقاق</h3>
+      <p>التاريخ المحدد لانتهاء أجل الإذن وسداد قيمته الاسمية وفق شروط الإصدار.</p>
+    </article>
+
+    <article class="guide-item">
+      <h3>متوسط العائد</h3>
+      <p>نسبة العائد المنشورة ضمن نتيجة العطاء، وتُعرض هنا كما وردت في المصدر.</p>
+    </article>
+  </div>
+
+  <div class="note">
+    هذا الدليل للتوضيح العام، وليس نصيحة استثمارية أو بديلًا عن شروط العطاء الرسمية.
+  </div>
 </section>
 
-<section class="page" id="guide">
-  <div class="actions">
-    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
-    <button class="btn" onclick="go('history','history')">البيانات التاريخية</button>
-  </div>
-  <div class="heading">دليل تواريخ أذون الخزانة</div>
-  <div class="info-card"><h3>تاريخ الجلسة</h3><p>التاريخ الذي أُجري فيه العطاء وأُعلنت نتائجه.</p></div>
-  <div class="info-card"><h3>تاريخ الإصدار</h3><p>التاريخ الذي يبدأ منه إصدار أذون الخزانة وفق بيانات العطاء.</p></div>
-  <div class="info-card"><h3>تاريخ الاستحقاق</h3><p>التاريخ المحدد لانتهاء أجل الإذن وسداد قيمته الاسمية وفق شروط الإصدار.</p></div>
-  <div class="info-card"><h3>متوسط العائد</h3><p>متوسط العائد المنشور لنتيجة العطاء، كما يرد في جدول المصدر.</p></div>
-  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
-</section>
 </main>
 
+<!-- مكان محجوز للإعلان داخل الإطار -->
+<div class="ad-slot" id="shared-ad-slot">
+  مساحة إعلان Google AdMob ‏320×50
+</div>
+
 <footer class="footer">
-  <strong>جروب عملاء البنوك المصرية</strong>
+  <div class="footer-brand">جروب عملاء البنوك المصرية</div>
   <div class="developer">Developed by Tarek Metwally</div>
 </footer>
 
-<nav class="nav">
-  <button class="active" data-nav="home" onclick="go('home','home')"><span>⌂</span>الرئيسية</button>
-  <button data-nav="indicator" onclick="go('indicator','indicator')"><span>▤</span>المؤشر</button>
-  <button data-nav="analytics" onclick="go('analytics','analytics')"><span>▥</span>التاريخية</button>
-  <button data-nav="guide" onclick="go('guide','guide')"><span>ⓘ</span>الدليل</button>
+<nav class="bottom-nav">
+  <button class="active" data-page="home" onclick="showPage('home')">
+    <span>⌂</span>الرئيسية
+  </button>
+  <button data-page="indicator" onclick="showPage('indicator')">
+    <span>▤</span>المؤشر
+  </button>
+  <button data-page="history" onclick="showPage('history')">
+    <span>▥</span>التاريخ
+  </button>
+  <button data-page="guide" onclick="showPage('guide')">
+    <span>ⓘ</span>الدليل
+  </button>
 </nav>
+
 </div>
 
 <script>
-const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
+const csvUrl =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
 
-const TERMS = [
-  {key:"91",label:"91 يوم"},
-  {key:"182",label:"182 يوم"},
-  {key:"273",label:"273 يوم"},
-  {key:"364",label:"364 يوم"},
-  {key:"357",label:"357 يوم"},
-  {key:"other",label:"مدد أخرى"}
-];
+const knownTerms = ["91","182","273","364","357"];
 
-let data = [];
-let selected = "182";
-let histSelected = "182";
-let analyticsSelected = "182";
+let allData = [];
+let currentTerm = "182";
+let loading = false;
 
-function go(id,key) {
-  document.querySelectorAll(".page").forEach(p => {
-    p.classList.toggle("active", p.id === id);
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.toggle("active", page.id === "page-" + name);
   });
-  document.querySelectorAll(".nav button").forEach(b => {
-    b.classList.toggle("active", b.dataset.nav === key);
+
+  document.querySelectorAll(".bottom-nav button").forEach(button => {
+    button.classList.toggle("active", button.dataset.page ===
+      (name === "term" ? "history" : name));
   });
-  if (id === "indicator") renderMain();
-  if (id === "history") renderHistory();
-  if (id === "analytics") renderAnalytics();
-  window.scrollTo(0,0);
+
+  window.scrollTo({top:0, behavior:"auto"});
+
+  if (name === "history") renderHistoryCounts();
+}
+
+function normalizeTerm(value) {
+  const text = String(value || "").trim();
+  const match = text.match(/\d+/);
+  return match ? match[0] : text;
 }
 
 function parseCSV(text) {
   const rows = [];
-  let row = [], value = "", quoted = false;
-  text = text.replace(/^\uFEFF/,"");
+  let row = [];
+  let value = "";
+  let quoted = false;
 
-  for (let i=0; i<text.length; i++) {
-    const c = text[i];
+  text = text.replace(/^\uFEFF/, "");
 
-    if (c === '"') {
-      if (quoted && text[i+1] === '"') {
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+
+    if (ch === '"') {
+      if (quoted && text[i + 1] === '"') {
         value += '"';
         i++;
       } else {
         quoted = !quoted;
       }
-    } else if (c === "," && !quoted) {
+    } else if (ch === "," && !quoted) {
       row.push(value.trim());
       value = "";
-    } else if ((c === "\n" || c === "\r") && !quoted) {
-      if (c === "\r" && text[i+1] === "\n") i++;
+    } else if ((ch === "\n" || ch === "\r") && !quoted) {
+      if (ch === "\r" && text[i + 1] === "\n") i++;
+
       row.push(value.trim());
-      if (row.some(x => x !== "")) rows.push(row);
+      if (row.some(cell => cell !== "")) rows.push(row);
+
       row = [];
       value = "";
     } else {
-      value += c;
+      value += ch;
     }
   }
 
   if (value !== "" || row.length) {
     row.push(value.trim());
-    if (row.some(x => x !== "")) rows.push(row);
+    if (row.some(cell => cell !== "")) rows.push(row);
   }
+
   return rows;
 }
 
-function normalizeTerm(value) {
-  const match = String(value || "").trim().match(/\d+/);
-  return match ? match[0] : String(value || "").trim();
+function dateValue(value) {
+  const text = String(value || "").trim();
+  const match = text.match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/);
+
+  if (match) {
+    return new Date(
+      Number(match[1]),
+      Number(match[2]) - 1,
+      Number(match[3])
+    ).getTime();
+  }
+
+  const parsed = new Date(text).getTime();
+  return Number.isNaN(parsed) ? 0 : parsed;
 }
 
-function isOther(t) {
-  return !["91","182","273","364","357"].includes(t);
-}
-
-function dateNum(value) {
-  const m = String(value || "").match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/);
-  return m ? new Date(+m[1],+m[2]-1,+m[3]).getTime() : 0;
-}
-
-function rowsFor(t) {
-  return data.filter(r => t === "other" ? isOther(r.term) : r.term === t)
-    .slice()
-    .sort((a,b) => dateNum(b.session)-dateNum(a.session));
-}
-
-function esc(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&":"&amp;",
     "<":"&lt;",
     ">":"&gt;",
     '"':"&quot;",
     "'":"&#39;"
-  })[c]);
+  })[char]);
 }
 
-function drawTerms(containerId, selectedKey, callback) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = TERMS.map(t =>
-    `<button class="term ${t.key === selectedKey ? "active" : ""}" data-term="${t.key}">${t.label}</button>`
-  ).join("");
-
-  el.querySelectorAll("button").forEach(button => {
-    button.onclick = () => callback(button.dataset.term);
-  });
+function sortedRows(term) {
+  return allData.filter(row => {
+    if (term === "other") return !knownTerms.includes(row.term);
+    return row.term === term;
+  }).slice().sort((a,b) => dateValue(b.session) - dateValue(a.session));
 }
 
-function tableRows(rows) {
-  if (!rows.length) {
-    return '<tr><td colspan="4" class="message">لا توجد نتائج مسجلة لهذا الأجل في البيانات المحمّلة.</td></tr>';
-  }
+function yieldText(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  return text.includes("%") ? text : text + "%";
+}
 
-  return rows.map(r => {
-    let y = String(r.yield || "").trim();
-    if (y && !y.includes("%")) y += "%";
-
-    return `<tr>
-      <td class="session">${esc(r.session)}</td>
-      <td>${esc(r.issue)}</td>
-      <td>${esc(r.maturity)}</td>
-      <td class="yield">${esc(y)}</td>
+function rowHTML(row) {
+  return `
+    <tr>
+      <td>${escapeHTML(row.session)}</td>
+      <td>${escapeHTML(row.issue)}</td>
+      <td>${escapeHTML(row.maturity)}</td>
+      <td>${escapeHTML(yieldText(row.yield))}</td>
     </tr>`;
-  }).join("");
 }
 
-function renderMain() {
-  drawTerms("terms-main",selected,t => {
-    selected = t;
-    renderMain();
-  });
+async function refreshData() {
+  if (loading) return;
+  loading = true;
 
-  const rows = rowsFor(selected);
-  const label = TERMS.find(t => t.key === selected).label;
-  document.getElementById("main-title").textContent = "سجل نتائج أجل " + label;
-  document.getElementById("main-count").textContent = rows.length + " نتيجة";
-  document.getElementById("main-body").innerHTML = tableRows(rows);
-}
-
-function renderHistory() {
-  drawTerms("terms-history",histSelected,t => {
-    histSelected = t;
-    renderHistory();
-  });
-
-  const rows = rowsFor(histSelected);
-  const label = TERMS.find(t => t.key === histSelected).label;
-  document.getElementById("history-title").textContent = "السجل التاريخي — " + label;
-  document.getElementById("history-count").textContent = rows.length + " نتيجة";
-  document.getElementById("history-body").innerHTML = tableRows(rows);
-}
-
-function renderAnalytics() {
-  drawTerms("terms-analytics",analyticsSelected,t => {
-    analyticsSelected = t;
-    renderAnalytics();
-  });
-
-  const rows = rowsFor(analyticsSelected);
-  const label = TERMS.find(t => t.key === analyticsSelected).label;
-  document.getElementById("analytics-title").textContent = "البيانات التاريخية — " + label;
-  document.getElementById("analytics-count").textContent = rows.length + " نتيجة";
-  document.getElementById("analytics-body").innerHTML = tableRows(rows);
-}
-
-async function fetchData() {
-  document.getElementById("status").textContent = "● جاري التحديث";
+  const status = document.getElementById("connection-status");
+  status.textContent = "● جاري التحديث";
+  status.style.color = "var(--gold-light)";
 
   try {
-    const response = await fetch(csvUrl,{cache:"no-store"});
+    const response = await fetch(csvUrl, {cache:"no-store"});
+
     if (!response.ok) throw new Error("HTTP " + response.status);
 
-    const text = await response.text();
-    if (text.trim().startsWith("<")) throw new Error("Google لم يُرجع CSV");
+    const csvText = await response.text();
 
-    const rows = parseCSV(text);
-    if (rows.length < 2) throw new Error("لا توجد سجلات");
+    if (csvText.trim().startsWith("<")) {
+      throw new Error("لم تصل بيانات CSV");
+    }
 
-    data = rows.slice(1)
-      .filter(r => r.length >= 6)
-      .map(r => ({
-        term:normalizeTerm(r[1]),
-        session:String(r[2] || "").trim(),
-        issue:String(r[3] || "").trim(),
-        maturity:String(r[4] || "").trim(),
-        yield:String(r[5] || "").trim()
+    const rows = parseCSV(csvText);
+
+    if (rows.length < 2) {
+      throw new Error("لا توجد سجلات في الملف المنشور");
+    }
+
+    const newData = rows.slice(1)
+      .filter(row => row.length >= 6)
+      .map(row => ({
+        term: normalizeTerm(row[1]),
+        session: String(row[2] || "").trim(),
+        issue: String(row[3] || "").trim(),
+        maturity: String(row[4] || "").trim(),
+        yield: String(row[5] || "").trim()
       }))
-      .filter(r => r.term && r.session && r.yield);
+      .filter(row => row.term && row.yield);
 
-    document.getElementById("status").textContent = "● متصل بالمصدر";
-    document.getElementById("updated").textContent =
-      "تحديث " + new Date().toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
+    allData = newData;
 
-    document.getElementById("total").textContent = data.length;
+    status.textContent = "● متصل بالمصدر";
+    status.style.color = "var(--green)";
 
-    const latest = data.slice().sort(
-      (a,b) => dateNum(b.session)-dateNum(a.session)
+    document.getElementById("update-time").textContent =
+      "تحديث " + new Date().toLocaleTimeString("ar-EG", {
+        hour:"2-digit",
+        minute:"2-digit"
+      });
+
+    document.getElementById("total-count").textContent =
+      allData.length.toLocaleString("ar-EG");
+
+    const latest = allData.slice().sort(
+      (a,b) => dateValue(b.session) - dateValue(a.session)
     )[0];
 
-    document.getElementById("latest").textContent = latest ? latest.session : "—";
+    document.getElementById("latest-session").textContent =
+      latest ? latest.session : "لا توجد بيانات";
 
-    renderMain();
-    renderHistory();
-    renderAnalytics();
+    renderTable();
+    renderHistoryCounts();
+    renderTermPage();
 
   } catch (error) {
-    console.error("خطأ تحميل البيانات:",error);
-    document.getElementById("status").textContent = "● تعذّر الاتصال";
+    console.error("خطأ في تحميل Google Sheets:", error);
 
-    const message = '<tr><td colspan="4" class="message error">تعذر تحميل البيانات من Google Sheets. تأكد من نشر الجدول للعامة بصيغة CSV.</td></tr>';
+    status.textContent = "● تعذر الاتصال";
+    status.style.color = "var(--red)";
 
-    document.getElementById("main-body").innerHTML = message;
-    document.getElementById("history-body").innerHTML = message;
-    document.getElementById("analytics-body").innerHTML = message;
+    document.getElementById("table-body").innerHTML =
+      '<tr><td colspan="4" class="error">تعذر تحميل البيانات. تحقق من الإنترنت وإتاحة جدول Google Sheets للنشر العام.</td></tr>';
+
+    document.getElementById("total-count").textContent = "—";
+    document.getElementById("latest-session").textContent = "—";
+  } finally {
+    loading = false;
   }
 }
 
-renderMain();
-renderHistory();
-renderAnalytics();
-fetchData();
+function selectTerm(term, button) {
+  currentTerm = term;
+
+  document.querySelectorAll("#main-terms .term-btn").forEach(item => {
+    item.classList.toggle("active", item === button);
+  });
+
+  const names = {
+    "91":"91 يوم",
+    "182":"182 يوم",
+    "273":"273 يوم",
+    "364":"364 يوم",
+    "357":"357 يوم",
+    "other":"المدد الأخرى"
+  };
+
+  document.getElementById("table-heading").textContent =
+    "سجل نتائج أجل " + names[term];
+
+  renderTable();
+}
+
+function renderTable() {
+  const data = sortedRows(currentTerm);
+
+  document.getElementById("row-count").textContent =
+    data.length.toLocaleString("ar-EG") + " نتيجة";
+
+  document.getElementById("table-body").innerHTML = data.length
+    ? data.map(rowHTML).join("")
+    : '<tr><td colspan="4" class="empty">لا توجد نتائج مسجلة لهذا الأجل في البيانات المتاحة.</td></tr>';
+}
+
+function renderHistoryCounts() {
+  knownTerms.concat(["other"]).forEach(term => {
+    const element = document.getElementById("count-" + term);
+    if (!element) return;
+
+    const count = sortedRows(term).length;
+    element.textContent =
+      count.toLocaleString("ar-EG") + " سجل متاح";
+  });
+}
+
+function openHistoryTerm(term) {
+  currentTerm = term;
+
+  const names = {
+    "91":"91 يوم",
+    "182":"182 يوم",
+    "273":"273 يوم",
+    "364":"364 يوم",
+    "357":"357 يوم",
+    "other":"المدد الأخرى"
+  };
+
+  document.getElementById("term-page-title").textContent =
+    "السجل التاريخي — " + names[term];
+
+  renderTermPage();
+  showPage("term");
+}
+
+function renderTermPage() {
+  const body = document.getElementById("term-table-body");
+  if (!body) return;
+
+  const data = sortedRows(currentTerm).slice(0,200);
+
+  document.getElementById("term-page-count").textContent =
+    data.length.toLocaleString("ar-EG") + " سجل";
+
+  body.innerHTML = data.length
+    ? data.map(rowHTML).join("")
+    : '<tr><td colspan="4" class="empty">لا توجد سجلات متاحة لهذا الأجل.</td></tr>';
+}
+
+refreshData();
 </script>
 </body>
 </html>
