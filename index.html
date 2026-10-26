@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<title>مؤشر أذون الخزانة | جروب عملاء البنوك المصرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#050505;
+  --panel:#101010;
+  --gold:#d4af37;
+  --gold2:#f0d879;
+  --text:#f4f1e8;
+  --muted:#aaa69a;
+  --green:#39cf83;
+  --red:#ff7777;
+}
+* { box-sizing:border-box; }
+html,body {
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Cairo',sans-serif;
+}
+body {
+  padding:8px;
+  display:flex;
+  justify-content:center;
+}
+button { font:inherit; cursor:pointer; }
+.app {
+  width:100%;
+  max-width:520px;
+  min-height:calc(100dvh - 16px);
+  border:1.5px solid var(--gold);
+  border-radius:20px;
+  background:#0b0b0b;
+  box-shadow:0 0 20px #d4af3718;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.topbar {
+  padding:12px;
+  border-bottom:1px solid #342b12;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.brand-mark {
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:#17140a;
+}
+.brand-mark img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.brand-copy { flex:1; min-width:0; }
+.brand-title {
+  color:var(--gold2);
+  font-size:1rem;
+  font-weight:800;
+}
+.brand-sub { color:var(--muted); font-size:.68rem; }
+.status { font-size:.65rem; white-space:nowrap; color:var(--green); }
+main { padding:13px; flex:1; }
+.page { display:none; }
+.page.active { display:block; }
+.hero { padding:15px 3px; text-align:center; }
+.hero .eyebrow { color:var(--muted); font-size:.75rem; }
+.hero h1 {
+  color:var(--gold2);
+  font-size:1.4rem;
+  margin:7px 0;
+}
+.hero p {
+  color:#c4c0b5;
+  font-size:.8rem;
+  line-height:1.8;
+  margin:0;
+}
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin:10px 0;
+}
+.section-head h2 {
+  font-size:.95rem;
+  margin:0;
+  border-right:3px solid var(--gold);
+  padding-right:8px;
+}
+.small-muted { color:var(--muted); font-size:.68rem; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+}
+.nav-card {
+  border:1px solid #55451b;
+  background:linear-gradient(145deg,#19170f,#101010);
+  color:var(--text);
+  border-radius:12px;
+  padding:13px 10px;
+  text-align:right;
+  min-height:100px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:7px;
+}
+.nav-card .symbol { font-size:1.3rem; color:var(--gold2); }
+.nav-card strong { font-size:.84rem; }
+.nav-card small { color:var(--muted); font-size:.68rem; line-height:1.5; }
+.btn {
+  border:1px solid var(--gold);
+  background:#17140a;
+  color:var(--gold2);
+  padding:8px 11px;
+  border-radius:9px;
+  font-size:.78rem;
+  font-weight:700;
+}
+.btn.ghost { border-color:#514b3a; color:#ddd; background:#151515; }
+.back-row { display:flex; gap:8px; margin-bottom:12px; }
+.back-row .btn { flex:1; }
+.term-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  margin-bottom:13px;
+}
+.term-btn {
+  background:#141414;
+  border:1px solid #6d5921;
+  color:var(--gold2);
+  padding:9px 3px;
+  border-radius:9px;
+  font-size:.8rem;
+  font-weight:700;
+}
+.term-btn.active { background:var(--gold); color:#080808; }
+.panel {
+  border:1px solid #40351a;
+  background:#090909;
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.panel-title {
+  padding:10px;
+  background:#15130d;
+  border-bottom:1px solid #3c3014;
+  font-size:.83rem;
+  font-weight:700;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:7px;
+}
+.table-scroll {
+  overflow:auto;
+  max-height:320px;
+  overscroll-behavior:contain;
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:455px;
+  text-align:center;
+  font-size:.7rem;
+}
+th {
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#16265b;
+  color:white;
+  padding:10px 6px;
+  white-space:nowrap;
+}
+td {
+  padding:10px 6px;
+  border-top:1px solid #28251d;
+  white-space:nowrap;
+  color:#e8e4d9;
+}
+td:first-child { color:var(--gold2); font-weight:700; }
+td:last-child { color:var(--green); font-weight:800; }
+.empty,.loading,.error {
+  padding:18px 10px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.77rem;
+  line-height:1.8;
+}
+.error { color:var(--red); }
+.stat-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin:10px 0 16px;
+}
+.stat {
+  border:1px solid #3f341a;
+  background:#111;
+  border-radius:10px;
+  padding:11px;
+}
+.stat label { font-size:.7rem; color:var(--muted); display:block; }
+.stat strong {
+  display:block;
+  color:var(--gold2);
+  font-size:1rem;
+  margin-top:4px;
+  overflow-wrap:anywhere;
+}
+.ad-slot {
+  min-height:50px;
+  margin:8px 10px;
+  border:1px dashed #4b4638;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#827d70;
+  font-size:.66rem;
+  text-align:center;
+  padding:7px;
+}
+.footer {
+  padding:8px 12px;
+  border-top:1px solid #332a12;
+  text-align:center;
+}
+.footer-brand { color:var(--gold2); font-weight:800; font-size:.8rem; }
+.developer { color:#898579; font-size:.64rem; }
+.bottom-nav {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:4px;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  background:#0a0a0a;
+  border-top:1px solid #302711;
+}
+.bottom-nav button {
+  border:0;
+  background:transparent;
+  color:#a8a397;
+  font-size:.66rem;
+  padding:7px 2px;
+  border-radius:8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+}
+.bottom-nav button span { font-size:1rem; }
+.bottom-nav button.active { background:#241e0c; color:var(--gold2); }
+.chart-wrap { padding:10px; }
+.chart-row {
+  display:grid;
+  grid-template-columns:65px 1fr 72px;
+  gap:7px;
+  align-items:center;
+  margin:12px 0;
+  font-size:.68rem;
+}
+.bar-track {
+  height:11px;
+  background:#27241b;
+  border-radius:20px;
+  overflow:hidden;
+}
+.bar {
+  height:100%;
+  background:linear-gradient(90deg,#9b7922,var(--gold2));
+  border-radius:20px;
+}
+.chart-value { text-align:left; color:var(--green); font-weight:700; }
+.note {
+  font-size:.72rem;
+  line-height:1.8;
+  color:#c3beb2;
+  padding:9px;
+  border-right:2px solid var(--gold);
+  background:#13120e;
+  border-radius:7px;
+  margin:10px 0;
+}
+.guide-list { display:grid; gap:8px; }
+.guide-item {
+  border:1px solid #39301a;
+  border-radius:10px;
+  padding:11px;
+  background:#101010;
+}
+.guide-item h3 { font-size:.82rem; color:var(--gold2); margin:0 0 5px; }
+.guide-item p { font-size:.74rem; color:#c8c3b7; line-height:1.8; margin:0; }
+@media(max-width:360px) {
+  body { padding:4px; }
+  .app { min-height:calc(100dvh - 8px); border-radius:15px; }
+  main { padding:10px; }
+  .topbar { padding:10px; }
+  .hero h1 { font-size:1.25rem; }
+  .term-btn { font-size:.72rem; }
+  .nav-card { padding:11px 8px; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="topbar">
+  <div class="brand-mark">
+    <img src="logo.png" alt="شعار جروب عملاء البنوك المصرية"
+    onerror="this.style.display='none'">
+  </div>
+  <div class="brand-copy">
+    <div class="brand-title">مؤشر أذون الخزانة</div>
+    <div class="brand-sub">جروب عملاء البنوك المصرية</div>
+  </div>
+  <div id="connection-status" class="status">● جاري الاتصال</div>
+</header>
+
+<main>
+
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="eyebrow">متابعة نتائج العطاءات الرسمية</div>
+    <h1>مؤشرات أذون الخزانة المصرية</h1>
+    <p>تابع النتائج والعوائد والآجال من بيانات المصدر.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <label>عدد النتائج المحمّلة</label>
+      <strong id="total-count">—</strong>
+    </div>
+    <div class="stat">
+      <label>آخر تاريخ جلسة مسجل</label>
+      <strong id="latest-session">—</strong>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>أقسام التطبيق</h2></div>
+
+  <div class="grid">
+    <button class="nav-card" onclick="showPage('indicator')">
+      <span class="symbol">▤</span>
+      <strong>المؤشر العام</strong>
+      <small>نتائج العطاءات حسب الأجل</small>
+    </button>
+    <button class="nav-card" onclick="showPage('analytics')">
+      <span class="symbol">▥</span>
+      <strong>التحليلات والمقارنات</strong>
+      <small>رسوم مبنية على البيانات المتاحة</small>
+    </button>
+    <button class="nav-card" onclick="showPage('guide')">
+      <span class="symbol">ⓘ</span>
+      <strong>دليل تواريخ الأذون</strong>
+      <small>شرح الجلسة والإصدار والاستحقاق</small>
+    </button>
+    <button class="nav-card" onclick="refreshData()">
+      <span class="symbol">↻</span>
+      <strong>تحديث البيانات</strong>
+      <small>جلب أحدث البيانات المنشورة</small>
+    </button>
+  </div>
+</section>
+
+<section class="page" id="page-indicator">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+    <button class="btn" onclick="refreshData()">↻ تحديث</button>
+  </div>
+
+  <div class="section-head">
+    <h2>المؤشر العام</h2>
+    <span class="small-muted" id="update-time">—</span>
+  </div>
+
+  <div class="term-grid" id="main-terms">
+    <button class="term-btn" onclick="selectTerm('91',this)">91 يوم</button>
+    <button class="term-btn active" onclick="selectTerm('182',this)">182 يوم</button>
+    <button class="term-btn" onclick="selectTerm('273',this)">273 يوم</button>
+    <button class="term-btn" onclick="selectTerm('364',this)">364 يوم</button>
+    <button class="term-btn" onclick="selectTerm('357',this)">357 يوم</button>
+    <button class="term-btn" onclick="selectTerm('other',this)">مدد أخرى</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">
+      <span id="table-heading">سجل نتائج أجل 182 يوم</span>
+      <span class="small-muted" id="row-count">0 نتيجة</span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>تاريخ الجلسة</th>
+            <th>تاريخ الإصدار</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>متوسط العائد</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr><td colspan="4" class="loading">جاري جلب البيانات...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-term">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+    <button class="btn" onclick="showPage('indicator')">كل الآجال</button>
+  </div>
+
+  <div class="section-head">
+    <h2 id="term-page-title">سجل الأجل</h2>
+    <span class="small-muted" id="term-page-count"></span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">سجل العطاءات — الأحدث أولًا</div>
+    <div class="table-scroll" style="max-height:52dvh">
+      <table>
+        <thead>
+          <tr>
+            <th>تاريخ الجلسة</th>
+            <th>تاريخ الإصدار</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>متوسط العائد</th>
+          </tr>
+        </thead>
+        <tbody id="term-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-analytics">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+    <button class="btn" onclick="refreshData()">↻ تحديث</button>
+  </div>
+
+  <div class="section-head"><h2>التحليلات والمقارنات</h2></div>
+
+  <div class="panel">
+    <div class="panel-title">عدد السجلات حسب الأجل</div>
+    <div class="chart-wrap" id="count-chart">
+      <div class="loading">جاري تحليل البيانات...</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">متوسط العائد المسجل لكل أجل</div>
+    <div class="chart-wrap" id="yield-chart">
+      <div class="loading">جاري تحليل البيانات...</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">أحدث السجلات المتاحة</div>
+    <div class="table-scroll" style="max-height:240px">
+      <table style="min-width:300px">
+        <thead><tr><th>الأجل</th><th>الجلسة</th><th>العائد</th></tr></thead>
+        <tbody id="recent-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="note">
+    متوسط العائد في الرسم متوسط حسابي للسجلات المحمّلة لكل أجل، وليس عائدًا رسميًا مستقلًا.
+  </div>
+</section>
+
+<section class="page" id="page-guide">
+  <div class="back-row">
+    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+  </div>
+
+  <div class="section-head"><h2>دليل تواريخ أذون الخزانة</h2></div>
+
+  <div class="guide-list">
+    <article class="guide-item">
+      <h3>تاريخ الجلسة</h3>
+      <p>تاريخ انعقاد العطاء الذي تُعلن فيه العروض ونتائج القبول والعائد.</p>
+    </article>
+    <article class="guide-item">
+      <h3>تاريخ الإصدار</h3>
+      <p>التاريخ الذي يبدأ منه إصدار أذون الخزانة وفق بيانات العطاء المنشورة.</p>
+    </article>
+    <article class="guide-item">
+      <h3>تاريخ الاستحقاق</h3>
+      <p>التاريخ المحدد لانتهاء أجل الإذن وسداد قيمته الاسمية وفق شروط الإصدار.</p>
+    </article>
+    <article class="guide-item">
+      <h3>متوسط العائد</h3>
+      <p>نسبة العائد المنشورة ضمن نتيجة العطاء، وتُعرض هنا كما وردت في المصدر.</p>
+    </article>
+    <article class="guide-item">
+      <h3>طريقة قراءة الجدول</h3>
+      <p>اختر الأجل المطلوب ثم راجع تواريخ الجلسة والإصدار والاستحقاق ومتوسط العائد. تُعرض النتائج الأحدث أولًا.</p>
+    </article>
+  </div>
+
+  <div class="note">
+    هذا الدليل توضيحي عام، وليس نصيحة استثمارية أو بديلًا عن شروط العطاء الرسمية.
+  </div>
+</section>
+
+</main>
+
+<!-- مساحة الإعلان داخل الإطار الذهبي -->
+<div class="ad-slot" id="shared-ad-slot">
+  مساحة إعلان Google AdMob ‏320×50
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">جروب عملاء البنوك المصرية</div>
+  <div class="developer">Developed by Tarek Metwally</div>
+</footer>
+
+<nav class="bottom-nav">
+  <button class="active" data-page="home" onclick="showPage('home')">
+    <span>⌂</span>الرئيسية
+  </button>
+  <button data-page="indicator" onclick="showPage('indicator')">
+    <span>▤</span>المؤشر
+  </button>
+  <button data-page="analytics" onclick="showPage('analytics')">
+    <span>▥</span>التحليلات
+  </button>
+  <button data-page="guide" onclick="showPage('guide')">
+    <span>ⓘ</span>الدليل
+  </button>
+</nav>
+
+</div>
+
+<script>
+const csvUrl =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
+
+const knownTerms = ["91","182","273","364","357"];
+let allData = [];
+let currentTerm = "182";
+
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.toggle("active", page.id === "page-" + name);
+  });
+
+  document.querySelectorAll(".bottom-nav button").forEach(button => {
+    button.classList.toggle("active", button.dataset.page ===
+      (name === "term" ? "indicator" : name));
+  });
+
+  if (name === "analytics") renderAnalytics();
+}
+
+function normalizeTerm(value) {
+  const match = String(value || "").trim().match(/\d+/);
+  return match ? match[0] : String(value || "").trim();
+}
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let quoted = false;
+
+  text = text.replace(/^\uFEFF/, "");
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+
+    if (ch === '"') {
+      if (quoted && text[i + 1] === '"') {
+        value += '"';
+        i++;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (ch === "," && !quoted) {
+      row.push(value.trim());
+      value = "";
+    } else if ((ch === "\n" || ch === "\r") && !quoted) {
+      if (ch === "\r" && text[i + 1] === "\n") i++;
+      row.push(value.trim());
+
+      if (row.some(cell => cell !== "")) rows.push(row);
+      row = [];
+      value = "";
+    } else {
+      value += ch;
+    }
+  }
+
+  if (value !== "" || row.length) {
+    row.push(value.trim());
+    if (row.some(cell => cell !== "")) rows.push(row);
+  }
+
+  return rows;
+}
+
+async function refreshData() {
+  const status = document.getElementById("connection-status");
+  status.textContent = "● جاري التحديث";
+  status.style.color = "var(--gold2)";
+
+  document.getElementById("table-body").innerHTML =
+    '<tr><td colspan="4" class="loading">جاري جلب البيانات...</td></tr>';
+
+  try {
+    const response = await fetch(csvUrl, { cache: "no-store" });
+
+    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    const csvText = await response.text();
+
+    if (csvText.trim().startsWith("<")) {
+      throw new Error("لم تصل بيانات CSV");
+    }
+
+    const rows = parseCSV(csvText);
+
+    if (rows.length < 2) throw new Error("لا توجد سجلات");
+
+    allData = rows.slice(1)
+      .filter(row => row.length >= 6)
+      .map(row => ({
+        term: normalizeTerm(row[1]),
+        session: String(row[2] || "").trim(),
+        issue: String(row[3] || "").trim(),
+        maturity: String(row[4] || "").trim(),
+        yield: String(row[5] || "").trim()
+      }))
+      .filter(row => row.term && row.yield);
+
+    status.textContent = "● متصل بالمصدر";
+    status.style.color = "var(--green)";
+
+    document.getElementById("update-time").textContent =
+      "تحديث " + new Date().toLocaleTimeString("ar-EG", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+    document.getElementById("total-count").textContent =
+      allData.length.toLocaleString("ar-EG");
+
+    const latest = [...allData].sort(
+      (a, b) => dateValue(b.session) - dateValue(a.session)
+    )[0];
+
+    document.getElementById("latest-session").textContent =
+      latest ? latest.session : "لا توجد بيانات";
+
+    renderTable();
+    renderTermPage();
+    renderAnalytics();
+
+  } catch (error) {
+    console.error("خطأ في تحميل Google Sheets:", error);
+
+    status.textContent = "● تعذر الاتصال";
+    status.style.color = "var(--red)";
+
+    document.getElementById("table-body").innerHTML =
+      '<tr><td colspan="4" class="error">تعذر تحميل البيانات. تحقق من الإنترنت ومن إتاحة جدول Google Sheets للنشر العام.</td></tr>';
+
+    document.getElementById("total-count").textContent = "—";
+    document.getElementById("latest-session").textContent = "—";
+
+    document.getElementById("count-chart").innerHTML =
+      '<div class="error">تعذر تحميل البيانات للتحليل.</div>';
+
+    document.getElementById("yield-chart").innerHTML =
+      '<div class="error">تعذر تحميل البيانات للتحليل.</div>';
+  }
+}
+
+function dateValue(value) {
+  const date = new Date(String(value || "").replace(/\//g, "-"));
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function yieldNumber(value) {
+  const number = parseFloat(
+    String(value || "").replace(/%/g, "").replace(/,/g, ".")
+  );
+  return Number.isFinite(number) ? number : null;
+}
+
+function filterTerm(term) {
+  return allData.filter(row => {
+    if (term === "other") return !knownTerms.includes(row.term);
+    return row.term === term;
+  });
+}
+
+function selectTerm(term, button) {
+  currentTerm = term;
+
+  document.querySelectorAll("#main-terms .term-btn").forEach(item => {
+    item.classList.toggle("active", item === button);
+  });
+
+  const names = {
+    "91":"91 يوم",
+    "182":"182 يوم",
+    "273":"273 يوم",
+    "364":"364 يوم",
+    "357":"357 يوم",
+    "other":"المدد الأخرى"
+  };
+
+  document.getElementById("table-heading").textContent =
+    "سجل نتائج أجل " + names[term];
+
+  document.getElementById("term-page-title").textContent =
+    "سجل نتائج أجل " + names[term];
+
+  renderTable();
+  renderTermPage();
+}
+
+function rowHTML(row) {
+  let yieldValue = escapeHTML(row.yield);
+
+  if (yieldValue && !yieldValue.includes("%")) {
+    yieldValue += "%";
+  }
+
+  return `
+    <tr>
+      <td>${escapeHTML(row.session)}</td>
+      <td>${escapeHTML(row.issue)}</td>
+      <td>${escapeHTML(row.maturity)}</td>
+      <td>${yieldValue}</td>
+    </tr>`;
+}
+
+function renderTable() {
+  const data = filterTerm(currentTerm).slice().sort(
+    (a, b) => dateValue(b.session) - dateValue(a.session)
+  );
+
+  document.getElementById("row-count").textContent =
+    data.length.toLocaleString("ar-EG") + " نتيجة";
+
+  document.getElementById("table-body").innerHTML = data.length
+    ? data.map(rowHTML).join("")
+    : '<tr><td colspan="4" class="empty">لا توجد نتائج مسجلة لهذا الأجل.</td></tr>';
+}
+
+function renderTermPage() {
+  const data = filterTerm(currentTerm).slice().sort(
+    (a, b) => dateValue(b.session) - dateValue(a.session)
+  );
+
+  document.getElementById("term-page-count").textContent =
+    data.length.toLocaleString("ar-EG") + " نتيجة";
+
+  document.getElementById("term-table-body").innerHTML = data.length
+    ? data.map(rowHTML).join("")
+    : '<tr><td colspan="4" class="empty">لا توجد نتائج مسجلة لهذا الأجل.</td></tr>';
+}
+
+function openTerm(term) {
+  currentTerm = term;
+  renderTermPage();
+  showPage("term");
+}
+
+function renderAnalytics() {
+  const countChart = document.getElementById("count-chart");
+  if (!countChart) return;
+
+  const counts = knownTerms.map(term => ({
+    term,
+    count: filterTerm(term).length
+  }));
+
+  counts.push({ term:"other", count:filterTerm("other").length });
+
+  const maxCount = Math.max(1, ...counts.map(item => item.count));
+
+  countChart.innerHTML = counts.map(item => `
+    <div class="chart-row">
+      <span>${item.term === "other" ? "أخرى" : item.term + " يوم"}</span>
+      <div class="bar-track">
+        <div class="bar" style="width:${item.count / maxCount * 100}%"></div>
+      </div>
+      <strong class="chart-value">${item.count.toLocaleString("ar-EG")}</strong>
+    </div>
+  `).join("");
+
+  const averages = knownTerms.map(term => {
+    const values = filterTerm(term)
+      .map(row => yieldNumber(row.yield))
+      .filter(value => value !== null);
+
+    return {
+      term,
+      average: values.length
+        ? values.reduce((sum, value) => sum + value, 0) / values.length
+        : null
+    };
+  });
+
+  const available = averages.filter(item => item.average !== null);
+  const maxAverage = Math.max(1, ...available.map(item => item.average));
+
+  document.getElementById("yield-chart").innerHTML =
+    averages.map(item => `
+      <div class="chart-row">
+        <span>${item.term} يوم</span>
+        <div class="bar-track">
+          <div class="bar" style="width:${
+            item.average === null ? 0 : item.average / maxAverage * 100
+          }%"></div>
+        </div>
+        <strong class="chart-value">${
+          item.average === null ? "—" : item.average.toFixed(3) + "%"
+        }</strong>
+      </div>
+    `).join("");
+
+  const recent = [...allData].sort(
+    (a, b) => dateValue(b.session) - dateValue(a.session)
+  ).slice(0, 10);
+
+  document.getElementById("recent-body").innerHTML = recent.length
+    ? recent.map(row => `
+      <tr>
+        <td>${knownTerms.includes(row.term) ? row.term + " يوم" : "أخرى"}</td>
+        <td>${escapeHTML(row.session)}</td>
+        <td>${escapeHTML(
+          row.yield.includes("%") ? row.yield : row.yield + "%"
+        )}</td>
+      </tr>
+    `).join("")
+    : '<tr><td colspan="3" class="empty">لا توجد بيانات متاحة.</td></tr>';
+}
+
+refreshData();
+</script>
+</body>
+</html>
