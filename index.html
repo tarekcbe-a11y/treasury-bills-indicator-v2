@@ -3,580 +3,367 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080808">
 <title>مؤشر أذون الخزانة | جروب عملاء البنوك المصرية</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#050505;
-  --panel:#101010;
-  --gold:#d4af37;
-  --gold2:#f0d879;
-  --text:#f4f1e8;
+  --bg:#080808;
+  --panel:#12120f;
+  --gold:#d9b52e;
+  --light:#f1d86b;
   --muted:#aaa69a;
-  --green:#39cf83;
+  --line:#4b3d13;
+  --green:#21d88a;
   --red:#ff7777;
 }
 * { box-sizing:border-box; }
 html,body {
-  margin:0;
-  min-height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Cairo',sans-serif;
+  margin:0; min-height:100%; width:100%;
+  background:#000; color:#f5f1e7;
+  font-family:Tahoma,Arial,sans-serif;
 }
-body {
-  padding:8px;
-  display:flex;
-  justify-content:center;
-}
+body { padding:7px; line-height:1.45; }
 button { font:inherit; cursor:pointer; }
 .app {
-  width:100%;
-  max-width:520px;
-  min-height:calc(100dvh - 16px);
-  border:1.5px solid var(--gold);
-  border-radius:20px;
-  background:#0b0b0b;
-  box-shadow:0 0 20px #d4af3718;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
+  max-width:520px; width:100%;
+  min-height:calc(100dvh - 14px);
+  margin:auto; background:var(--bg);
+  border:2px solid var(--gold);
+  border-radius:20px; overflow:hidden;
+  display:flex; flex-direction:column;
 }
-.topbar {
-  padding:12px;
-  border-bottom:1px solid #342b12;
-  display:flex;
-  align-items:center;
-  gap:10px;
+.header {
+  display:flex; justify-content:center; align-items:center;
+  text-align:center; min-height:82px;
+  padding:12px 8px; border-bottom:1px solid #352b10;
 }
-.brand-mark {
-  width:46px;
-  height:46px;
-  flex:0 0 46px;
-  border:1px solid var(--gold);
-  border-radius:50%;
-  overflow:hidden;
-  display:grid;
-  place-items:center;
-  background:#17140a;
+.brand { font-size:clamp(20px,5vw,26px); font-weight:800; color:var(--light); }
+.sub { font-size:12px; color:var(--muted); margin-top:3px; }
+.status {
+  position:absolute; left:14px; top:100px;
+  font-size:10px; color:var(--green);
 }
-.brand-mark img {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-.brand-copy { flex:1; min-width:0; }
-.brand-title {
-  color:var(--gold2);
-  font-size:1rem;
-  font-weight:800;
-}
-.brand-sub { color:var(--muted); font-size:.68rem; }
-.status { font-size:.65rem; white-space:nowrap; color:var(--green); }
-main { padding:13px; flex:1; }
+main { padding:10px 9px; flex:1; min-height:0; }
 .page { display:none; }
 .page.active { display:block; }
-.hero { padding:15px 3px; text-align:center; }
-.hero .eyebrow { color:var(--muted); font-size:.75rem; }
-.hero h1 {
-  color:var(--gold2);
-  font-size:1.4rem;
-  margin:7px 0;
+.actions {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:7px; margin-bottom:12px;
 }
-.hero p {
-  color:#c4c0b5;
-  font-size:.8rem;
-  line-height:1.8;
-  margin:0;
+.btn,.term {
+  border:1px solid var(--line); background:#141414;
+  color:var(--light); border-radius:10px;
+  font-weight:700; padding:9px 4px; min-width:0;
 }
-.section-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-  margin:10px 0;
+.btn { min-height:42px; }
+.btn.secondary { color:#eee; }
+.heading {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:6px; margin:12px 0 9px; padding-right:9px;
+  border-right:4px solid var(--gold);
+  font-size:18px; font-weight:800;
 }
-.section-head h2 {
-  font-size:.95rem;
-  margin:0;
-  border-right:3px solid var(--gold);
-  padding-right:8px;
+.note { font-size:10px; color:var(--muted); font-weight:400; }
+.terms {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px; margin:10px 0 12px;
 }
-.small-muted { color:var(--muted); font-size:.68rem; }
-.grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:9px;
+.term { min-height:40px; font-size:13px; }
+.term.active { background:var(--gold); color:#111; border-color:var(--light); }
+.table-card {
+  border:1px solid var(--line); border-radius:14px;
+  overflow:hidden; background:#090909;
 }
-.nav-card {
-  border:1px solid #55451b;
-  background:linear-gradient(145deg,#19170f,#101010);
-  color:var(--text);
-  border-radius:12px;
-  padding:13px 10px;
-  text-align:right;
-  min-height:100px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  gap:7px;
+.table-title {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:5px; padding:9px 8px; background:#12110d;
+  border-bottom:1px solid #33290f; font-size:13px; font-weight:700;
 }
-.nav-card .symbol { font-size:1.3rem; color:var(--gold2); }
-.nav-card strong { font-size:.84rem; }
-.nav-card small { color:var(--muted); font-size:.68rem; line-height:1.5; }
-.btn {
-  border:1px solid var(--gold);
-  background:#17140a;
-  color:var(--gold2);
-  padding:8px 11px;
-  border-radius:9px;
-  font-size:.78rem;
-  font-weight:700;
-}
-.btn.ghost { border-color:#514b3a; color:#ddd; background:#151515; }
-.back-row { display:flex; gap:8px; margin-bottom:12px; }
-.back-row .btn { flex:1; }
-.term-grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:7px;
-  margin-bottom:13px;
-}
-.term-btn {
-  background:#141414;
-  border:1px solid #6d5921;
-  color:var(--gold2);
-  padding:9px 3px;
-  border-radius:9px;
-  font-size:.8rem;
-  font-weight:700;
-}
-.term-btn.active { background:var(--gold); color:#080808; }
-.panel {
-  border:1px solid #40351a;
-  background:#090909;
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:12px;
-}
-.panel-title {
-  padding:10px;
-  background:#15130d;
-  border-bottom:1px solid #3c3014;
-  font-size:.83rem;
-  font-weight:700;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:7px;
-}
+.count { font-size:10px; color:var(--muted); white-space:nowrap; font-weight:400; }
 .table-scroll {
-  overflow:auto;
-  max-height:320px;
+  height:clamp(245px,40dvh,360px);
+  overflow-y:auto; overflow-x:hidden;
   overscroll-behavior:contain;
+  scrollbar-width:thin; scrollbar-color:#80691d #111;
 }
-table {
-  width:100%;
-  border-collapse:collapse;
-  min-width:455px;
-  text-align:center;
-  font-size:.7rem;
-}
+table { width:100%; border-collapse:collapse; table-layout:fixed; text-align:center; }
 th {
-  position:sticky;
-  top:0;
-  z-index:1;
-  background:#16265b;
-  color:white;
-  padding:10px 6px;
-  white-space:nowrap;
+  position:sticky; top:0; z-index:1;
+  background:#17150d; color:var(--light);
+  font-size:clamp(9px,2.7vw,12px);
+  padding:8px 1px; border-bottom:1px solid #6c5718;
+  line-height:1.35; overflow-wrap:anywhere;
 }
 td {
-  padding:10px 6px;
-  border-top:1px solid #28251d;
-  white-space:nowrap;
-  color:#e8e4d9;
+  font-size:clamp(9px,2.75vw,12px);
+  padding:9px 1px; border-bottom:1px solid #24221b;
+  line-height:1.35; overflow-wrap:anywhere;
 }
-td:first-child { color:var(--gold2); font-weight:700; }
-td:last-child { color:var(--green); font-weight:800; }
-.empty,.loading,.error {
-  padding:18px 10px;
-  text-align:center;
-  color:var(--muted);
-  font-size:.77rem;
-  line-height:1.8;
-}
-.error { color:var(--red); }
-.stat-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:8px;
-  margin:10px 0 16px;
-}
-.stat {
-  border:1px solid #3f341a;
-  background:#111;
-  border-radius:10px;
-  padding:11px;
-}
-.stat label { font-size:.7rem; color:var(--muted); display:block; }
-.stat strong {
-  display:block;
-  color:var(--gold2);
-  font-size:1rem;
-  margin-top:4px;
-  overflow-wrap:anywhere;
-}
-.ad-slot {
-  min-height:50px;
-  margin:8px 10px;
-  border:1px dashed #4b4638;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#827d70;
-  font-size:.66rem;
-  text-align:center;
-  padding:7px;
+th,td { width:25%; }
+td.session { color:var(--light); font-weight:700; }
+td.yield { color:var(--green); font-weight:800; }
+.message { padding:20px 6px; color:var(--muted); font-size:12px; text-align:center; }
+.message.error { color:var(--red); }
+.ad {
+  margin:11px 0 8px; min-height:50px;
+  border:1px dashed #4b4532; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; color:#827d70; font-size:11px; padding:7px;
 }
 .footer {
-  padding:8px 12px;
-  border-top:1px solid #332a12;
-  text-align:center;
+  text-align:center; border-top:1px solid #352b10; padding:9px;
 }
-.footer-brand { color:var(--gold2); font-weight:800; font-size:.8rem; }
-.developer { color:#898579; font-size:.64rem; }
-.bottom-nav {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:4px;
-  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
-  background:#0a0a0a;
-  border-top:1px solid #302711;
+.footer strong { font-size:14px; color:var(--light); }
+.developer { font-size:10px; color:#8e8a80; margin-top:3px; }
+.nav {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:3px; border-top:1px solid #352b10; padding:6px;
 }
-.bottom-nav button {
-  border:0;
-  background:transparent;
-  color:#a8a397;
-  font-size:.66rem;
-  padding:7px 2px;
-  border-radius:8px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:3px;
+.nav button {
+  background:transparent; color:#aaa394; border:0;
+  border-radius:10px; padding:6px 1px; font-size:10px; min-height:54px;
 }
-.bottom-nav button span { font-size:1rem; }
-.bottom-nav button.active { background:#241e0c; color:var(--gold2); }
-.chart-wrap { padding:10px; }
-.chart-row {
-  display:grid;
-  grid-template-columns:65px 1fr 72px;
-  gap:7px;
-  align-items:center;
-  margin:12px 0;
-  font-size:.68rem;
+.nav button span { display:block; font-size:18px; margin-bottom:2px; }
+.nav button.active { background:#211b08; color:var(--light); }
+.intro { text-align:center; padding:12px 2px 16px; }
+.intro h1 { font-size:clamp(21px,6vw,29px); color:var(--light); margin:4px 0 7px; }
+.intro p { color:var(--muted); font-size:12px; margin:0; }
+.stats,.home-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; }
+.stat,.home-card,.info-card {
+  border:1px solid var(--line); border-radius:12px;
+  background:var(--panel); padding:12px 9px; min-width:0;
 }
-.bar-track {
-  height:11px;
-  background:#27241b;
-  border-radius:20px;
-  overflow:hidden;
+.stat { text-align:center; }
+.stat-label { font-size:10px; color:var(--muted); }
+.stat-value { font-size:16px; font-weight:800; color:var(--light); margin-top:5px; overflow-wrap:anywhere; }
+.home-card { color:#f5f1e7; text-align:center; min-height:78px; }
+.home-card strong { display:block; color:var(--light); font-size:13px; margin-bottom:5px; }
+.home-card small { display:block; color:var(--muted); font-size:10px; }
+.info-card { margin:8px 0; }
+.info-card h3 { margin:0 0 5px; color:var(--light); font-size:13px; }
+.info-card p { margin:0; font-size:12px; line-height:1.7; }
+.bars { display:grid; gap:10px; padding-top:8px; }
+.bar-row {
+  display:grid; grid-template-columns:70px 1fr 55px;
+  align-items:center; gap:6px; font-size:10px;
 }
-.bar {
-  height:100%;
-  background:linear-gradient(90deg,#9b7922,var(--gold2));
-  border-radius:20px;
-}
-.chart-value { text-align:left; color:var(--green); font-weight:700; }
-.note {
-  font-size:.72rem;
-  line-height:1.8;
-  color:#c3beb2;
-  padding:9px;
-  border-right:2px solid var(--gold);
-  background:#13120e;
-  border-radius:7px;
-  margin:10px 0;
-}
-.guide-list { display:grid; gap:8px; }
-.guide-item {
-  border:1px solid #39301a;
-  border-radius:10px;
-  padding:11px;
-  background:#101010;
-}
-.guide-item h3 { font-size:.82rem; color:var(--gold2); margin:0 0 5px; }
-.guide-item p { font-size:.74rem; color:#c8c3b7; line-height:1.8; margin:0; }
+.track { height:12px; background:#29251a; border-radius:8px; overflow:hidden; }
+.fill { height:100%; background:var(--gold); border-radius:8px; }
 @media(max-width:360px) {
-  body { padding:4px; }
-  .app { min-height:calc(100dvh - 8px); border-radius:15px; }
-  main { padding:10px; }
-  .topbar { padding:10px; }
-  .hero h1 { font-size:1.25rem; }
-  .term-btn { font-size:.72rem; }
-  .nav-card { padding:11px 8px; }
+  body { padding:3px; }
+  .app { min-height:calc(100dvh - 6px); border-radius:16px; }
+  main { padding:8px 6px; }
+  .header { min-height:76px; }
+  .term { font-size:12px; }
+  .heading { font-size:16px; }
+  .table-title { font-size:11px; padding:8px 6px; }
+  .table-scroll { height:clamp(225px,38dvh,320px); }
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-
-<header class="topbar">
-  <div class="brand-mark">
-    <img src="logo.png" alt="شعار جروب عملاء البنوك المصرية"
-    onerror="this.style.display='none'">
+<header class="header">
+  <div>
+    <div class="brand">مؤشر أذون الخزانة</div>
+    <div class="sub">جروب عملاء البنوك المصرية</div>
   </div>
-  <div class="brand-copy">
-    <div class="brand-title">مؤشر أذون الخزانة</div>
-    <div class="brand-sub">جروب عملاء البنوك المصرية</div>
-  </div>
-  <div id="connection-status" class="status">● جاري الاتصال</div>
+  <div class="status" id="status">● جاري الاتصال</div>
 </header>
 
 <main>
-
-<section class="page active" id="page-home">
-  <div class="hero">
-    <div class="eyebrow">متابعة نتائج العطاءات الرسمية</div>
+<section class="page active" id="home">
+  <div class="intro">
     <h1>مؤشرات أذون الخزانة المصرية</h1>
-    <p>تابع النتائج والعوائد والآجال من بيانات المصدر.</p>
+    <p>متابعة نتائج العطاءات والعوائد والآجال من بيانات المصدر</p>
   </div>
-
-  <div class="stat-grid">
+  <div class="stats">
     <div class="stat">
-      <label>عدد النتائج المحمّلة</label>
-      <strong id="total-count">—</strong>
+      <div class="stat-label">عدد النتائج المحمّلة</div>
+      <div class="stat-value" id="total">—</div>
     </div>
     <div class="stat">
-      <label>آخر تاريخ جلسة مسجل</label>
-      <strong id="latest-session">—</strong>
+      <div class="stat-label">أحدث تاريخ جلسة</div>
+      <div class="stat-value" id="latest">—</div>
     </div>
   </div>
-
-  <div class="section-head"><h2>أقسام التطبيق</h2></div>
-
-  <div class="grid">
-    <button class="nav-card" onclick="showPage('indicator')">
-      <span class="symbol">▤</span>
-      <strong>المؤشر العام</strong>
-      <small>نتائج العطاءات حسب الأجل</small>
+  <div class="heading">أقسام التطبيق</div>
+  <div class="home-grid">
+    <button class="home-card" onclick="go('indicator','indicator')">
+      <strong>المؤشر العام</strong><small>أحدث النتائج حسب الأجل</small>
     </button>
-    <button class="nav-card" onclick="showPage('analytics')">
-      <span class="symbol">▥</span>
-      <strong>التحليلات والمقارنات</strong>
-      <small>رسوم مبنية على البيانات المتاحة</small>
+    <button class="home-card" onclick="go('history','history')">
+      <strong>البيانات التاريخية</strong><small>سجل مستقل لكل أجل</small>
     </button>
-    <button class="nav-card" onclick="showPage('guide')">
-      <span class="symbol">ⓘ</span>
-      <strong>دليل تواريخ الأذون</strong>
-      <small>شرح الجلسة والإصدار والاستحقاق</small>
+    <button class="home-card" onclick="go('analytics','analytics')">
+      <strong>عرض البيانات التاريخية</strong><small>مقارنات من البيانات المنشورة</small>
     </button>
-    <button class="nav-card" onclick="refreshData()">
-      <span class="symbol">↻</span>
-      <strong>تحديث البيانات</strong>
-      <small>جلب أحدث البيانات المنشورة</small>
+    <button class="home-card" onclick="go('guide','guide')">
+      <strong>دليل تواريخ الأذون</strong><small>شرح الجلسة والإصدار والاستحقاق</small>
     </button>
   </div>
+  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
 
-<section class="page" id="page-indicator">
-  <div class="back-row">
-    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
-    <button class="btn" onclick="refreshData()">↻ تحديث</button>
+<section class="page" id="indicator">
+  <div class="actions">
+    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
+    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
   </div>
-
-  <div class="section-head">
-    <h2>المؤشر العام</h2>
-    <span class="small-muted" id="update-time">—</span>
-  </div>
-
-  <div class="term-grid" id="main-terms">
-    <button class="term-btn" onclick="selectTerm('91',this)">91 يوم</button>
-    <button class="term-btn active" onclick="selectTerm('182',this)">182 يوم</button>
-    <button class="term-btn" onclick="selectTerm('273',this)">273 يوم</button>
-    <button class="term-btn" onclick="selectTerm('364',this)">364 يوم</button>
-    <button class="term-btn" onclick="selectTerm('357',this)">357 يوم</button>
-    <button class="term-btn" onclick="selectTerm('other',this)">مدد أخرى</button>
-  </div>
-
-  <div class="panel">
-    <div class="panel-title">
-      <span id="table-heading">سجل نتائج أجل 182 يوم</span>
-      <span class="small-muted" id="row-count">0 نتيجة</span>
+  <div class="heading"><span>المؤشر العام</span><span class="note" id="updated">—</span></div>
+  <div class="terms" id="terms-main"></div>
+  <div class="table-card">
+    <div class="table-title">
+      <span id="main-title">سجل النتائج</span><span class="count" id="main-count">0 نتيجة</span>
     </div>
     <div class="table-scroll">
       <table>
-        <thead>
-          <tr>
-            <th>تاريخ الجلسة</th>
-            <th>تاريخ الإصدار</th>
-            <th>تاريخ الاستحقاق</th>
-            <th>متوسط العائد</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <tr><td colspan="4" class="loading">جاري جلب البيانات...</td></tr>
-        </tbody>
+        <thead><tr><th>تاريخ الجلسة</th><th>تاريخ الإصدار</th><th>تاريخ الاستحقاق</th><th>متوسط العائد %</th></tr></thead>
+        <tbody id="main-body"><tr><td colspan="4" class="message">جاري تحميل البيانات...</td></tr></tbody>
       </table>
     </div>
   </div>
+  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
 
-<section class="page" id="page-term">
-  <div class="back-row">
-    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
-    <button class="btn" onclick="showPage('indicator')">كل الآجال</button>
+<section class="page" id="history">
+  <div class="actions">
+    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
+    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
   </div>
-
-  <div class="section-head">
-    <h2 id="term-page-title">سجل الأجل</h2>
-    <span class="small-muted" id="term-page-count"></span>
-  </div>
-
-  <div class="panel">
-    <div class="panel-title">سجل العطاءات — الأحدث أولًا</div>
-    <div class="table-scroll" style="max-height:52dvh">
+  <div class="heading">البيانات التاريخية</div>
+  <p class="note" style="white-space:normal">اختر أجلًا لعرض جميع سجلاته المتاحة من المصدر.</p>
+  <div class="terms" id="terms-history"></div>
+  <div class="table-card">
+    <div class="table-title">
+      <span id="history-title">اختر أجلًا</span><span class="count" id="history-count">0 نتيجة</span>
+    </div>
+    <div class="table-scroll">
       <table>
-        <thead>
-          <tr>
-            <th>تاريخ الجلسة</th>
-            <th>تاريخ الإصدار</th>
-            <th>تاريخ الاستحقاق</th>
-            <th>متوسط العائد</th>
-          </tr>
-        </thead>
-        <tbody id="term-table-body"></tbody>
+        <thead><tr><th>تاريخ الجلسة</th><th>تاريخ الإصدار</th><th>تاريخ الاستحقاق</th><th>متوسط العائد %</th></tr></thead>
+        <tbody id="history-body"><tr><td colspan="4" class="message">اختر أجلًا من الأعلى.</td></tr></tbody>
       </table>
     </div>
   </div>
+  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
 
-<section class="page" id="page-analytics">
-  <div class="back-row">
-    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
-    <button class="btn" onclick="refreshData()">↻ تحديث</button>
+<section class="page" id="analytics">
+  <div class="actions">
+    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
+    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
   </div>
-
-  <div class="section-head"><h2>التحليلات والمقارنات</h2></div>
-
-  <div class="panel">
-    <div class="panel-title">عدد السجلات حسب الأجل</div>
-    <div class="chart-wrap" id="count-chart">
-      <div class="loading">جاري تحليل البيانات...</div>
+  <div class="heading">عرض البيانات التاريخية</div>
+  <div class="terms" id="terms-analytics"></div>
+  <div class="table-card">
+    <div class="table-title">
+      <span id="analytics-title">اختر أجلًا للمقارنة</span>
+      <span class="count" id="analytics-count">0 نتيجة</span>
     </div>
-  </div>
-
-  <div class="panel">
-    <div class="panel-title">متوسط العائد المسجل لكل أجل</div>
-    <div class="chart-wrap" id="yield-chart">
-      <div class="loading">جاري تحليل البيانات...</div>
-    </div>
-  </div>
-
-  <div class="panel">
-    <div class="panel-title">أحدث السجلات المتاحة</div>
-    <div class="table-scroll" style="max-height:240px">
-      <table style="min-width:300px">
-        <thead><tr><th>الأجل</th><th>الجلسة</th><th>العائد</th></tr></thead>
-        <tbody id="recent-body"></tbody>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>تاريخ الجلسة</th><th>تاريخ الإصدار</th><th>تاريخ الاستحقاق</th><th>متوسط العائد %</th></tr></thead>
+        <tbody id="analytics-body"><tr><td colspan="4" class="message">اختر أجلًا من الأعلى.</td></tr></tbody>
       </table>
     </div>
   </div>
-
-  <div class="note">
-    متوسط العائد في الرسم متوسط حسابي للسجلات المحمّلة لكل أجل، وليس عائدًا رسميًا مستقلًا.
-  </div>
+  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
 
-<section class="page" id="page-guide">
-  <div class="back-row">
-    <button class="btn ghost" onclick="showPage('home')">← الرئيسية</button>
+<section class="page" id="guide">
+  <div class="actions">
+    <button class="btn secondary" onclick="go('home','home')">← الرئيسية</button>
+    <button class="btn" onclick="go('history','history')">البيانات التاريخية</button>
   </div>
-
-  <div class="section-head"><h2>دليل تواريخ أذون الخزانة</h2></div>
-
-  <div class="guide-list">
-    <article class="guide-item">
-      <h3>تاريخ الجلسة</h3>
-      <p>تاريخ انعقاد العطاء الذي تُعلن فيه العروض ونتائج القبول والعائد.</p>
-    </article>
-    <article class="guide-item">
-      <h3>تاريخ الإصدار</h3>
-      <p>التاريخ الذي يبدأ منه إصدار أذون الخزانة وفق بيانات العطاء المنشورة.</p>
-    </article>
-    <article class="guide-item">
-      <h3>تاريخ الاستحقاق</h3>
-      <p>التاريخ المحدد لانتهاء أجل الإذن وسداد قيمته الاسمية وفق شروط الإصدار.</p>
-    </article>
-    <article class="guide-item">
-      <h3>متوسط العائد</h3>
-      <p>نسبة العائد المنشورة ضمن نتيجة العطاء، وتُعرض هنا كما وردت في المصدر.</p>
-    </article>
-    <article class="guide-item">
-      <h3>طريقة قراءة الجدول</h3>
-      <p>اختر الأجل المطلوب ثم راجع تواريخ الجلسة والإصدار والاستحقاق ومتوسط العائد. تُعرض النتائج الأحدث أولًا.</p>
-    </article>
-  </div>
-
-  <div class="note">
-    هذا الدليل توضيحي عام، وليس نصيحة استثمارية أو بديلًا عن شروط العطاء الرسمية.
-  </div>
+  <div class="heading">دليل تواريخ أذون الخزانة</div>
+  <div class="info-card"><h3>تاريخ الجلسة</h3><p>التاريخ الذي أُجري فيه العطاء وأُعلنت نتائجه.</p></div>
+  <div class="info-card"><h3>تاريخ الإصدار</h3><p>التاريخ الذي يبدأ منه إصدار أذون الخزانة وفق بيانات العطاء.</p></div>
+  <div class="info-card"><h3>تاريخ الاستحقاق</h3><p>التاريخ المحدد لانتهاء أجل الإذن وسداد قيمته الاسمية وفق شروط الإصدار.</p></div>
+  <div class="info-card"><h3>متوسط العائد</h3><p>متوسط العائد المنشور لنتيجة العطاء، كما يرد في جدول المصدر.</p></div>
+  <div class="ad">مساحة محجوزة لإعلان Google AdMob ‏320×50</div>
 </section>
-
 </main>
 
-<!-- مساحة الإعلان داخل الإطار الذهبي -->
-<div class="ad-slot" id="shared-ad-slot">
-  مساحة إعلان Google AdMob ‏320×50
-</div>
-
 <footer class="footer">
-  <div class="footer-brand">جروب عملاء البنوك المصرية</div>
+  <strong>جروب عملاء البنوك المصرية</strong>
   <div class="developer">Developed by Tarek Metwally</div>
 </footer>
 
-<nav class="bottom-nav">
-  <button class="active" data-page="home" onclick="showPage('home')">
-    <span>⌂</span>الرئيسية
-  </button>
-  <button data-page="indicator" onclick="showPage('indicator')">
-    <span>▤</span>المؤشر
-  </button>
-  <button data-page="analytics" onclick="showPage('analytics')">
-    <span>▥</span>التحليلات
-  </button>
-  <button data-page="guide" onclick="showPage('guide')">
-    <span>ⓘ</span>الدليل
-  </button>
+<nav class="nav">
+  <button class="active" data-nav="home" onclick="go('home','home')"><span>⌂</span>الرئيسية</button>
+  <button data-nav="indicator" onclick="go('indicator','indicator')"><span>▤</span>المؤشر</button>
+  <button data-nav="analytics" onclick="go('analytics','analytics')"><span>▥</span>التاريخية</button>
+  <button data-nav="guide" onclick="go('guide','guide')"><span>ⓘ</span>الدليل</button>
 </nav>
-
 </div>
 
 <script>
-const csvUrl =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
+const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
 
-const knownTerms = ["91","182","273","364","357"];
-let allData = [];
-let currentTerm = "182";
+const TERMS = [
+  {key:"91",label:"91 يوم"},
+  {key:"182",label:"182 يوم"},
+  {key:"273",label:"273 يوم"},
+  {key:"364",label:"364 يوم"},
+  {key:"357",label:"357 يوم"},
+  {key:"other",label:"مدد أخرى"}
+];
 
-function showPage(name) {
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.toggle("active", page.id === "page-" + name);
+let data = [];
+let selected = "182";
+let histSelected = "182";
+let analyticsSelected = "182";
+
+function go(id,key) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.toggle("active", p.id === id);
   });
-
-  document.querySelectorAll(".bottom-nav button").forEach(button => {
-    button.classList.toggle("active", button.dataset.page ===
-      (name === "term" ? "indicator" : name));
+  document.querySelectorAll(".nav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.nav === key);
   });
+  if (id === "indicator") renderMain();
+  if (id === "history") renderHistory();
+  if (id === "analytics") renderAnalytics();
+  window.scrollTo(0,0);
+}
 
-  if (name === "analytics") renderAnalytics();
+function parseCSV(text) {
+  const rows = [];
+  let row = [], value = "", quoted = false;
+  text = text.replace(/^\uFEFF/,"");
+
+  for (let i=0; i<text.length; i++) {
+    const c = text[i];
+
+    if (c === '"') {
+      if (quoted && text[i+1] === '"') {
+        value += '"';
+        i++;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (c === "," && !quoted) {
+      row.push(value.trim());
+      value = "";
+    } else if ((c === "\n" || c === "\r") && !quoted) {
+      if (c === "\r" && text[i+1] === "\n") i++;
+      row.push(value.trim());
+      if (row.some(x => x !== "")) rows.push(row);
+      row = [];
+      value = "";
+    } else {
+      value += c;
+    }
+  }
+
+  if (value !== "" || row.length) {
+    row.push(value.trim());
+    if (row.some(x => x !== "")) rows.push(row);
+  }
+  return rows;
 }
 
 function normalizeTerm(value) {
@@ -584,299 +371,156 @@ function normalizeTerm(value) {
   return match ? match[0] : String(value || "").trim();
 }
 
-function parseCSV(text) {
-  const rows = [];
-  let row = [];
-  let value = "";
-  let quoted = false;
-
-  text = text.replace(/^\uFEFF/, "");
-
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-
-    if (ch === '"') {
-      if (quoted && text[i + 1] === '"') {
-        value += '"';
-        i++;
-      } else {
-        quoted = !quoted;
-      }
-    } else if (ch === "," && !quoted) {
-      row.push(value.trim());
-      value = "";
-    } else if ((ch === "\n" || ch === "\r") && !quoted) {
-      if (ch === "\r" && text[i + 1] === "\n") i++;
-      row.push(value.trim());
-
-      if (row.some(cell => cell !== "")) rows.push(row);
-      row = [];
-      value = "";
-    } else {
-      value += ch;
-    }
-  }
-
-  if (value !== "" || row.length) {
-    row.push(value.trim());
-    if (row.some(cell => cell !== "")) rows.push(row);
-  }
-
-  return rows;
+function isOther(t) {
+  return !["91","182","273","364","357"].includes(t);
 }
 
-async function refreshData() {
-  const status = document.getElementById("connection-status");
-  status.textContent = "● جاري التحديث";
-  status.style.color = "var(--gold2)";
-
-  document.getElementById("table-body").innerHTML =
-    '<tr><td colspan="4" class="loading">جاري جلب البيانات...</td></tr>';
-
-  try {
-    const response = await fetch(csvUrl, { cache: "no-store" });
-
-    if (!response.ok) throw new Error("HTTP " + response.status);
-
-    const csvText = await response.text();
-
-    if (csvText.trim().startsWith("<")) {
-      throw new Error("لم تصل بيانات CSV");
-    }
-
-    const rows = parseCSV(csvText);
-
-    if (rows.length < 2) throw new Error("لا توجد سجلات");
-
-    allData = rows.slice(1)
-      .filter(row => row.length >= 6)
-      .map(row => ({
-        term: normalizeTerm(row[1]),
-        session: String(row[2] || "").trim(),
-        issue: String(row[3] || "").trim(),
-        maturity: String(row[4] || "").trim(),
-        yield: String(row[5] || "").trim()
-      }))
-      .filter(row => row.term && row.yield);
-
-    status.textContent = "● متصل بالمصدر";
-    status.style.color = "var(--green)";
-
-    document.getElementById("update-time").textContent =
-      "تحديث " + new Date().toLocaleTimeString("ar-EG", {
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-
-    document.getElementById("total-count").textContent =
-      allData.length.toLocaleString("ar-EG");
-
-    const latest = [...allData].sort(
-      (a, b) => dateValue(b.session) - dateValue(a.session)
-    )[0];
-
-    document.getElementById("latest-session").textContent =
-      latest ? latest.session : "لا توجد بيانات";
-
-    renderTable();
-    renderTermPage();
-    renderAnalytics();
-
-  } catch (error) {
-    console.error("خطأ في تحميل Google Sheets:", error);
-
-    status.textContent = "● تعذر الاتصال";
-    status.style.color = "var(--red)";
-
-    document.getElementById("table-body").innerHTML =
-      '<tr><td colspan="4" class="error">تعذر تحميل البيانات. تحقق من الإنترنت ومن إتاحة جدول Google Sheets للنشر العام.</td></tr>';
-
-    document.getElementById("total-count").textContent = "—";
-    document.getElementById("latest-session").textContent = "—";
-
-    document.getElementById("count-chart").innerHTML =
-      '<div class="error">تعذر تحميل البيانات للتحليل.</div>';
-
-    document.getElementById("yield-chart").innerHTML =
-      '<div class="error">تعذر تحميل البيانات للتحليل.</div>';
-  }
+function dateNum(value) {
+  const m = String(value || "").match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/);
+  return m ? new Date(+m[1],+m[2]-1,+m[3]).getTime() : 0;
 }
 
-function dateValue(value) {
-  const date = new Date(String(value || "").replace(/\//g, "-"));
-  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+function rowsFor(t) {
+  return data.filter(r => t === "other" ? isOther(r.term) : r.term === t)
+    .slice()
+    .sort((a,b) => dateNum(b.session)-dateNum(a.session));
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
 }
 
-function yieldNumber(value) {
-  const number = parseFloat(
-    String(value || "").replace(/%/g, "").replace(/,/g, ".")
-  );
-  return Number.isFinite(number) ? number : null;
-}
+function drawTerms(containerId, selectedKey, callback) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = TERMS.map(t =>
+    `<button class="term ${t.key === selectedKey ? "active" : ""}" data-term="${t.key}">${t.label}</button>`
+  ).join("");
 
-function filterTerm(term) {
-  return allData.filter(row => {
-    if (term === "other") return !knownTerms.includes(row.term);
-    return row.term === term;
+  el.querySelectorAll("button").forEach(button => {
+    button.onclick = () => callback(button.dataset.term);
   });
 }
 
-function selectTerm(term, button) {
-  currentTerm = term;
-
-  document.querySelectorAll("#main-terms .term-btn").forEach(item => {
-    item.classList.toggle("active", item === button);
-  });
-
-  const names = {
-    "91":"91 يوم",
-    "182":"182 يوم",
-    "273":"273 يوم",
-    "364":"364 يوم",
-    "357":"357 يوم",
-    "other":"المدد الأخرى"
-  };
-
-  document.getElementById("table-heading").textContent =
-    "سجل نتائج أجل " + names[term];
-
-  document.getElementById("term-page-title").textContent =
-    "سجل نتائج أجل " + names[term];
-
-  renderTable();
-  renderTermPage();
-}
-
-function rowHTML(row) {
-  let yieldValue = escapeHTML(row.yield);
-
-  if (yieldValue && !yieldValue.includes("%")) {
-    yieldValue += "%";
+function tableRows(rows) {
+  if (!rows.length) {
+    return '<tr><td colspan="4" class="message">لا توجد نتائج مسجلة لهذا الأجل في البيانات المحمّلة.</td></tr>';
   }
 
-  return `
-    <tr>
-      <td>${escapeHTML(row.session)}</td>
-      <td>${escapeHTML(row.issue)}</td>
-      <td>${escapeHTML(row.maturity)}</td>
-      <td>${yieldValue}</td>
+  return rows.map(r => {
+    let y = String(r.yield || "").trim();
+    if (y && !y.includes("%")) y += "%";
+
+    return `<tr>
+      <td class="session">${esc(r.session)}</td>
+      <td>${esc(r.issue)}</td>
+      <td>${esc(r.maturity)}</td>
+      <td class="yield">${esc(y)}</td>
     </tr>`;
+  }).join("");
 }
 
-function renderTable() {
-  const data = filterTerm(currentTerm).slice().sort(
-    (a, b) => dateValue(b.session) - dateValue(a.session)
-  );
+function renderMain() {
+  drawTerms("terms-main",selected,t => {
+    selected = t;
+    renderMain();
+  });
 
-  document.getElementById("row-count").textContent =
-    data.length.toLocaleString("ar-EG") + " نتيجة";
-
-  document.getElementById("table-body").innerHTML = data.length
-    ? data.map(rowHTML).join("")
-    : '<tr><td colspan="4" class="empty">لا توجد نتائج مسجلة لهذا الأجل.</td></tr>';
+  const rows = rowsFor(selected);
+  const label = TERMS.find(t => t.key === selected).label;
+  document.getElementById("main-title").textContent = "سجل نتائج أجل " + label;
+  document.getElementById("main-count").textContent = rows.length + " نتيجة";
+  document.getElementById("main-body").innerHTML = tableRows(rows);
 }
 
-function renderTermPage() {
-  const data = filterTerm(currentTerm).slice().sort(
-    (a, b) => dateValue(b.session) - dateValue(a.session)
-  );
+function renderHistory() {
+  drawTerms("terms-history",histSelected,t => {
+    histSelected = t;
+    renderHistory();
+  });
 
-  document.getElementById("term-page-count").textContent =
-    data.length.toLocaleString("ar-EG") + " نتيجة";
-
-  document.getElementById("term-table-body").innerHTML = data.length
-    ? data.map(rowHTML).join("")
-    : '<tr><td colspan="4" class="empty">لا توجد نتائج مسجلة لهذا الأجل.</td></tr>';
-}
-
-function openTerm(term) {
-  currentTerm = term;
-  renderTermPage();
-  showPage("term");
+  const rows = rowsFor(histSelected);
+  const label = TERMS.find(t => t.key === histSelected).label;
+  document.getElementById("history-title").textContent = "السجل التاريخي — " + label;
+  document.getElementById("history-count").textContent = rows.length + " نتيجة";
+  document.getElementById("history-body").innerHTML = tableRows(rows);
 }
 
 function renderAnalytics() {
-  const countChart = document.getElementById("count-chart");
-  if (!countChart) return;
-
-  const counts = knownTerms.map(term => ({
-    term,
-    count: filterTerm(term).length
-  }));
-
-  counts.push({ term:"other", count:filterTerm("other").length });
-
-  const maxCount = Math.max(1, ...counts.map(item => item.count));
-
-  countChart.innerHTML = counts.map(item => `
-    <div class="chart-row">
-      <span>${item.term === "other" ? "أخرى" : item.term + " يوم"}</span>
-      <div class="bar-track">
-        <div class="bar" style="width:${item.count / maxCount * 100}%"></div>
-      </div>
-      <strong class="chart-value">${item.count.toLocaleString("ar-EG")}</strong>
-    </div>
-  `).join("");
-
-  const averages = knownTerms.map(term => {
-    const values = filterTerm(term)
-      .map(row => yieldNumber(row.yield))
-      .filter(value => value !== null);
-
-    return {
-      term,
-      average: values.length
-        ? values.reduce((sum, value) => sum + value, 0) / values.length
-        : null
-    };
+  drawTerms("terms-analytics",analyticsSelected,t => {
+    analyticsSelected = t;
+    renderAnalytics();
   });
 
-  const available = averages.filter(item => item.average !== null);
-  const maxAverage = Math.max(1, ...available.map(item => item.average));
-
-  document.getElementById("yield-chart").innerHTML =
-    averages.map(item => `
-      <div class="chart-row">
-        <span>${item.term} يوم</span>
-        <div class="bar-track">
-          <div class="bar" style="width:${
-            item.average === null ? 0 : item.average / maxAverage * 100
-          }%"></div>
-        </div>
-        <strong class="chart-value">${
-          item.average === null ? "—" : item.average.toFixed(3) + "%"
-        }</strong>
-      </div>
-    `).join("");
-
-  const recent = [...allData].sort(
-    (a, b) => dateValue(b.session) - dateValue(a.session)
-  ).slice(0, 10);
-
-  document.getElementById("recent-body").innerHTML = recent.length
-    ? recent.map(row => `
-      <tr>
-        <td>${knownTerms.includes(row.term) ? row.term + " يوم" : "أخرى"}</td>
-        <td>${escapeHTML(row.session)}</td>
-        <td>${escapeHTML(
-          row.yield.includes("%") ? row.yield : row.yield + "%"
-        )}</td>
-      </tr>
-    `).join("")
-    : '<tr><td colspan="3" class="empty">لا توجد بيانات متاحة.</td></tr>';
+  const rows = rowsFor(analyticsSelected);
+  const label = TERMS.find(t => t.key === analyticsSelected).label;
+  document.getElementById("analytics-title").textContent = "البيانات التاريخية — " + label;
+  document.getElementById("analytics-count").textContent = rows.length + " نتيجة";
+  document.getElementById("analytics-body").innerHTML = tableRows(rows);
 }
 
-refreshData();
+async function fetchData() {
+  document.getElementById("status").textContent = "● جاري التحديث";
+
+  try {
+    const response = await fetch(csvUrl,{cache:"no-store"});
+    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    const text = await response.text();
+    if (text.trim().startsWith("<")) throw new Error("Google لم يُرجع CSV");
+
+    const rows = parseCSV(text);
+    if (rows.length < 2) throw new Error("لا توجد سجلات");
+
+    data = rows.slice(1)
+      .filter(r => r.length >= 6)
+      .map(r => ({
+        term:normalizeTerm(r[1]),
+        session:String(r[2] || "").trim(),
+        issue:String(r[3] || "").trim(),
+        maturity:String(r[4] || "").trim(),
+        yield:String(r[5] || "").trim()
+      }))
+      .filter(r => r.term && r.session && r.yield);
+
+    document.getElementById("status").textContent = "● متصل بالمصدر";
+    document.getElementById("updated").textContent =
+      "تحديث " + new Date().toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
+
+    document.getElementById("total").textContent = data.length;
+
+    const latest = data.slice().sort(
+      (a,b) => dateNum(b.session)-dateNum(a.session)
+    )[0];
+
+    document.getElementById("latest").textContent = latest ? latest.session : "—";
+
+    renderMain();
+    renderHistory();
+    renderAnalytics();
+
+  } catch (error) {
+    console.error("خطأ تحميل البيانات:",error);
+    document.getElementById("status").textContent = "● تعذّر الاتصال";
+
+    const message = '<tr><td colspan="4" class="message error">تعذر تحميل البيانات من Google Sheets. تأكد من نشر الجدول للعامة بصيغة CSV.</td></tr>';
+
+    document.getElementById("main-body").innerHTML = message;
+    document.getElementById("history-body").innerHTML = message;
+    document.getElementById("analytics-body").innerHTML = message;
+  }
+}
+
+renderMain();
+renderHistory();
+renderAnalytics();
+fetchData();
 </script>
 </body>
 </html>
+
