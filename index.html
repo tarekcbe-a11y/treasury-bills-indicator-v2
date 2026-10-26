@@ -1,1073 +1,693 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#101010">
-<title>مؤشر أذون الخزانة المصرية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<title>مؤشرات أذون الخزانة المصرية</title>
 
 <style>
-:root {
-  --bg: #101010;
-  --panel: #191919;
-  --gold: #c8a75a;
-  --light: #e5ce8d;
-  --text: #f4f0e5;
-  --muted: #aaa69a;
+:root{
+  --bg:#080808;
+  --panel:#12120f;
+  --gold:#d9b52e;
+  --light:#f1d86b;
+  --muted:#aaa69a;
+  --line:#4b3d13;
+  --green:#21d88a;
+  --red:#ff7777;
 }
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Tahoma, Arial, sans-serif;
-  -webkit-text-size-adjust: 100%;
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  width:100%;
+  background:#000;
+  color:#f5f1e7;
+  font-family:Tahoma,Arial,sans-serif;
 }
-
-button { font: inherit; cursor: pointer; }
-
-#app {
-  width: 100%;
-  height: 100dvh;
-  max-width: 760px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-inline: 1px solid #514425;
-  background:
-    radial-gradient(ellipse at top, rgba(200,167,90,.07), transparent 42%),
-    var(--bg);
+body{padding:5px;line-height:1.45}
+button{font:inherit;cursor:pointer}
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:calc(100dvh - 10px);
+  margin:auto;
+  background:var(--bg);
+  border:1.5px solid var(--gold);
+  border-radius:17px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
-
-header {
-  flex-shrink: 0;
-  min-height: 60px;
-  padding: 7px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border-bottom: 1px solid var(--gold);
+.header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding:10px 8px 8px;
+  border-bottom:1px solid #352b10;
 }
-
-.logo {
-  position: absolute;
-  right: 12px;
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
+.logo{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+  margin-bottom:5px;
 }
-
-.header-title {
-  text-align: center;
-  padding-inline: 48px;
-  color: var(--light);
-  font-size: clamp(14px, 4vw, 19px);
-  font-weight: bold;
-  line-height: 1.5;
+.brand{
+  font-size:clamp(17px,4.8vw,23px);
+  font-weight:800;
+  color:var(--light);
 }
-
-.connection {
-  position: absolute;
-  left: 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  color: var(--muted);
+.group-name{
+  font-size:12px;
+  color:#eee8d8;
+  margin-top:3px;
 }
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
+.subtitle{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px;
 }
-
-main {
-  flex: 1;
-  min-height: 0;
-  position: relative;
-  overflow: hidden;
+.status{
+  font-size:10px;
+  color:var(--green);
+  margin-top:6px;
 }
-
-.page {
-  display: none;
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  padding: 10px 12px;
-  flex-direction: column;
-  gap: 8px;
+main{
+  padding:9px 8px;
+  flex:1;
+  min-height:0;
 }
-
-.page.active { display: flex; }
-
-.page-heading {
-  margin: 0;
-  text-align: center;
-  color: var(--light);
-  font-size: 16px;
-  flex-shrink: 0;
+.page{display:none}
+.page.active{display:block}
+.actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:6px;
+  margin-bottom:10px;
 }
-
-.subheading {
-  text-align: center;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.6;
-  flex-shrink: 0;
+.btn,.term{
+  border:1px solid var(--line);
+  background:#141414;
+  color:var(--light);
+  border-radius:9px;
+  font-weight:700;
+  padding:8px 5px;
+  min-width:0;
 }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  flex-shrink: 0;
+.btn{
+  min-height:39px;
+  font-size:13px;
 }
-
-.stat-card {
-  min-width: 0;
-  padding: 9px 7px;
-  text-align: center;
-  background: linear-gradient(145deg, #222019, #171717);
-  border: 1px solid rgba(200,167,90,.65);
-  border-radius: 9px;
+.heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:5px;
+  margin:10px 0 8px;
+  padding-right:8px;
+  border-right:3px solid var(--gold);
+  font-size:16px;
+  font-weight:800;
+  color:var(--light);
 }
-
-.stat-label {
-  color: var(--muted);
-  font-size: 11px;
-  margin-bottom: 7px;
+.note{
+  font-size:10px;
+  color:var(--muted);
+  font-weight:400;
 }
-
-.stat-value {
-  color: var(--light);
-  font-weight: bold;
-  font-size: clamp(17px, 4.5vw, 24px);
-  overflow-wrap: anywhere;
+.terms{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+  margin:9px 0 10px;
 }
-
-.stat-note {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 5px;
+.term{
+  min-height:37px;
+  font-size:12px;
+  padding:6px 2px;
 }
-
-.section-label {
-  color: var(--light);
-  font-size: 12px;
-  font-weight: bold;
-  flex-shrink: 0;
+.term.active{
+  background:var(--gold);
+  color:#111;
+  border-color:var(--light);
 }
-
-.tenor-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-  flex-shrink: 0;
+.table-card{
+  border:1px solid var(--gold);
+  border-radius:12px;
+  overflow:hidden;
+  background:#090909;
 }
-
-.tenor-btn, .back-btn {
-  color: var(--text);
-  background: var(--panel);
-  border: 1px solid rgba(200,167,90,.65);
-  border-radius: 8px;
-  padding: 9px 4px;
-  min-width: 0;
+.table-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:5px;
+  padding:8px 7px;
+  background:#12110d;
+  border-bottom:1px solid #33290f;
+  font-size:12px;
+  font-weight:700;
+  color:var(--light);
 }
-
-.tenor-btn {
-  font-size: 12px;
-  min-height: 40px;
+.count{
+  font-size:10px;
+  color:var(--muted);
+  white-space:nowrap;
+  font-weight:400;
 }
-
-.tenor-btn.selected {
-  background: #45391e;
-  color: var(--light);
-  border-color: var(--light);
+.table-scroll{
+  height:clamp(210px,38dvh,330px);
+  overflow-y:auto;
+  overflow-x:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#80691d #111;
 }
-
-.table-card {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  border: 1px solid rgba(200,167,90,.65);
-  border-radius: 9px;
-  background: var(--panel);
+table{
+  width:100%;
+  min-width:300px;
+  border-collapse:collapse;
+  table-layout:fixed;
+  text-align:center;
 }
-
-.table-heading {
-  flex-shrink: 0;
-  padding: 9px 8px;
-  color: var(--light);
-  font-size: 12px;
-  border-bottom: 1px solid rgba(200,167,90,.65);
+th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#14264b;
+  color:#fff;
+  font-size:clamp(9px,2.6vw,11px);
+  padding:8px 2px;
+  border:1px solid #293957;
+  line-height:1.4;
+  overflow-wrap:anywhere;
 }
-
-.table-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold) #222;
+td{
+  font-size:clamp(9px,2.65vw,12px);
+  padding:9px 2px;
+  border:1px solid #29261e;
+  line-height:1.4;
+  overflow-wrap:anywhere;
 }
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: fixed;
-  font-size: clamp(9px, 2.6vw, 12px);
+th,td{width:25%}
+td.session{color:#eee4c7}
+td.yield{color:var(--green);font-weight:800}
+.message{
+  padding:18px 5px;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
 }
-
-thead {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: #302919;
+.message.error{color:var(--red)}
+.ad{
+  margin:10px 0 5px;
+  min-height:50px;
+  border:1px dashed #4b4532;
+  border-radius:10px;
+  background:#0c0c0a;
 }
-
-th {
-  color: var(--light);
-  line-height: 1.5;
-  padding: 8px 2px;
-  border-bottom: 1px solid rgba(200,167,90,.65);
+.info-card{
+  margin:8px 0;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel);
+  padding:10px 9px;
 }
-
-td {
-  text-align: center;
-  padding: 9px 2px;
-  border-bottom: 1px solid #303030;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
+.info-card h3{
+  margin:0 0 5px;
+  color:var(--light);
+  font-size:13px;
 }
-
-tbody tr:nth-child(even) {
-  background: rgba(255,255,255,.025);
+.info-card p{
+  margin:0;
+  font-size:12px;
+  line-height:1.8;
 }
-
-.yield {
-  color: var(--light);
-  font-weight: bold;
-  direction: ltr;
-  white-space: nowrap;
+.footer{
+  text-align:center;
+  border-top:1px solid #352b10;
+  padding:6px;
 }
-
-.empty {
-  text-align: center;
-  color: var(--muted);
-  padding: 24px 10px;
-  font-size: 12px;
-  line-height: 1.8;
+.developer{
+  font-size:9px;
+  color:#8e8a80;
 }
-
-.ad-space {
-  flex-shrink: 0;
-  height: 52px;
-  min-height: 52px;
-  margin: 0 12px 6px;
-  border: 1px solid rgba(200,167,90,.55);
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.nav{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:4px;
+  border-top:1px solid #352b10;
+  padding:5px;
+  padding-bottom:max(5px,env(safe-area-inset-bottom));
 }
-
-footer {
-  flex-shrink: 0;
-  border-top: 1px solid rgba(200,167,90,.65);
-  padding: 6px 8px max(6px, env(safe-area-inset-bottom));
-  background: #131313;
+.nav button{
+  background:transparent;
+  color:#aaa394;
+  border:0;
+  border-radius:9px;
+  padding:5px 2px;
+  font-size:11px;
+  min-height:49px;
 }
-
-.nav {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5px;
+.nav button span{
+  display:block;
+  font-size:18px;
+  line-height:1.2;
+  margin-bottom:3px;
 }
-
-.nav-btn {
-  border: 1px solid transparent;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--muted);
-  min-width: 0;
-  padding: 7px 2px;
-  font-size: 10px;
-  line-height: 1.5;
+.nav button.active{
+  background:#211b08;
+  color:var(--light);
 }
-
-.nav-btn.active {
-  color: var(--light);
-  background: #2a2418;
-  border-color: rgba(200,167,90,.45);
-}
-
-.back-btn {
-  flex-shrink: 0;
-  min-height: 36px;
-  padding: 8px 12px;
-  font-size: 12px;
-}
-
-.info-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold) #222;
-}
-
-.info-card {
-  background: var(--panel);
-  border: 1px solid rgba(200,167,90,.65);
-  border-radius: 9px;
-  padding: 12px;
-  margin-bottom: 9px;
-  line-height: 1.9;
-  font-size: 12px;
-}
-
-.info-card h3 {
-  color: var(--light);
-  font-size: 13px;
-  margin: 0 0 6px;
-}
-
-.info-card p {
-  margin: 0;
-  color: #ddd7c8;
-}
-
-.chart-area {
-  flex-shrink: 0;
-  height: 145px;
-  width: 100%;
-  display: block;
-}
-
-.panel {
-  background: var(--panel);
-  border: 1px solid rgba(200,167,90,.65);
-  border-radius: 9px;
-  padding: 9px;
-  min-height: 0;
-}
-
-.panel-title {
-  font-size: 12px;
-  color: var(--light);
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.small-note {
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.7;
-}
-
-.comparison-table { flex: 1; }
-
-@media (max-height: 700px) {
-  header { min-height: 52px; }
-  .logo { width: 36px; height: 36px; }
-  .page { padding: 7px 9px; gap: 6px; }
-  .stat-card { padding: 7px 5px; }
-  .tenor-btn { min-height: 34px; padding: 6px 2px; }
-  .ad-space {
-    height: 42px;
-    min-height: 42px;
-    margin-bottom: 4px;
-  }
-  .nav-btn { padding: 5px 2px; }
-  td { padding-top: 7px; padding-bottom: 7px; }
-}
-
-@media (max-width: 350px) {
-  .logo { right: 6px; width: 35px; height: 35px; }
-  .header-title { padding-inline: 40px; font-size: 13px; }
-  .page { padding-inline: 7px; }
-  .tenor-btn { font-size: 10px; }
+@media(max-width:360px){
+  body{padding:3px}
+  .app{min-height:calc(100dvh - 6px);border-radius:13px}
+  main{padding:7px 5px}
+  .logo{width:46px;height:46px}
+  .brand{font-size:17px}
+  .group-name{font-size:11px}
+  .subtitle{font-size:9px}
+  .heading{font-size:14px}
+  .term{font-size:11px;min-height:35px}
+  .table-title{font-size:11px}
+  .nav button{font-size:10px;min-height:46px}
 }
 </style>
 </head>
 
 <body>
-<div id="app">
+<div class="app">
 
-<header>
-  <img class="logo" src="logo.png" alt="شعار المجموعة">
-  <div class="header-title">مؤشر أذون الخزانة المصرية</div>
-  <div class="connection">
-    <span class="dot" id="statusDot"></span>
-    <span id="statusText">جاري التحميل</span>
-  </div>
+<header class="header">
+  <img class="logo" src="./logo.png" alt="شعار جروب عملاء البنوك المصرية"
+       onerror="this.style.display='none'">
+  <div class="brand">مؤشرات أذون الخزانة المصرية</div>
+  <div class="group-name">جروب عملاء البنوك المصرية</div>
+  <div class="subtitle">متابعة نتائج العطاءات والعوائد وفق البيانات المنشورة بالمصدر</div>
+  <div class="status" id="status">● جاري الاتصال بالمصدر</div>
 </header>
 
 <main>
 
-  <!-- الصفحة الرئيسية -->
-  <section class="page active" id="homePage">
-    <h2 class="page-heading">المؤشر العام</h2>
-    <div class="subheading" id="lastUpdate">
-      متابعة أحدث البيانات المنشورة
+<!-- الرئيسية: تتضمن محتوى المؤشر مباشرة -->
+<section class="page active" id="home">
+
+  <div class="actions">
+    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
+  </div>
+
+  <div class="heading">
+    <span>الرئيسية</span>
+    <span class="note" id="updated">—</span>
+  </div>
+
+  <div class="terms" id="terms-main"></div>
+
+  <div class="table-card">
+    <div class="table-title">
+      <span id="main-title">سجل النتائج</span>
+      <span class="count" id="main-count">0 نتيجة</span>
     </div>
 
-    <div class="cards">
-      <div class="stat-card">
-        <div class="stat-label">عدد النتائج المسجلة</div>
-        <div class="stat-value" id="totalRecords">—</div>
-        <div class="stat-note">لكافة الآجال</div>
-      </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>تاريخ الجلسة</th>
+            <th>تاريخ الإصدار</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>متوسط العائد %</th>
+          </tr>
+        </thead>
+        <tbody id="main-body">
+          <tr>
+            <td colspan="4" class="message">جاري تحميل البيانات...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-      <div class="stat-card">
-        <div class="stat-label">متوسط العائد المنشور</div>
-        <div class="stat-value" id="overallYield">—</div>
-        <div class="stat-note">لكل النتائج المتاحة</div>
-      </div>
+  <div class="ad"></div>
+</section>
+
+<!-- البيانات التاريخية -->
+<section class="page" id="history">
+
+  <div class="actions">
+    <button class="btn" onclick="fetchData()">⟳ تحديث البيانات</button>
+  </div>
+
+  <div class="heading">البيانات التاريخية</div>
+
+  <p class="note">اختر أجلًا لعرض سجلاته المتاحة من المصدر.</p>
+
+  <div class="terms" id="terms-history"></div>
+
+  <div class="table-card">
+    <div class="table-title">
+      <span id="history-title">السجل التاريخي</span>
+      <span class="count" id="history-count">0 نتيجة</span>
     </div>
 
-    <div class="section-label">اختر أجل أذون الخزانة</div>
-
-    <div class="tenor-grid" id="homeTenors">
-      <button class="tenor-btn" data-tenor="91">٩١ يومًا</button>
-      <button class="tenor-btn" data-tenor="182">١٨٢ يومًا</button>
-      <button class="tenor-btn" data-tenor="273">٢٧٣ يومًا</button>
-      <button class="tenor-btn" data-tenor="364">٣٦٤ يومًا</button>
-      <button class="tenor-btn" data-tenor="357">٣٥٧ يومًا</button>
-      <button class="tenor-btn" data-tenor="other">مدد أخرى</button>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>تاريخ الجلسة</th>
+            <th>تاريخ الإصدار</th>
+            <th>تاريخ الاستحقاق</th>
+            <th>متوسط العائد %</th>
+          </tr>
+        </thead>
+        <tbody id="history-body">
+          <tr>
+            <td colspan="4" class="message">جاري تحميل البيانات...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="table-card">
-      <div class="table-heading">
-        أحدث نتائج العطاءات — جميع الآجال
-      </div>
+  <div class="ad"></div>
+</section>
 
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:25%">تاريخ الجلسة</th>
-              <th style="width:25%">تاريخ الإصدار</th>
-              <th style="width:25%">تاريخ الاستحقاق</th>
-              <th style="width:25%">متوسط العائد</th>
-            </tr>
-          </thead>
-          <tbody id="homeTable">
-            <tr>
-              <td colspan="4" class="empty">
-                جاري تحميل البيانات...
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+<!-- الدليل -->
+<section class="page" id="guide">
 
-  <!-- صفحة كل أجل -->
-  <section class="page" id="tenorPage">
-    <h2 class="page-heading" id="tenorTitle">نتائج العطاءات</h2>
+  <div class="heading">دليل أذون الخزانة</div>
 
-    <div class="subheading" id="tenorSummary">
-      أحدث النتائج أولًا
-    </div>
+  <div class="info-card">
+    <h3>تاريخ الجلسة</h3>
+    <p>التاريخ الذي أُجري فيه العطاء وأُعلنت نتائجه.</p>
+  </div>
 
-    <div class="cards">
-      <div class="stat-card">
-        <div class="stat-label">عدد النتائج</div>
-        <div class="stat-value" id="tenorCount">—</div>
-      </div>
+  <div class="info-card">
+    <h3>تاريخ الإصدار</h3>
+    <p>التاريخ الذي يبدأ منه إصدار أذون الخزانة وفق بيانات العطاء.</p>
+  </div>
 
-      <div class="stat-card">
-        <div class="stat-label">متوسط العائد المسجل</div>
-        <div class="stat-value" id="tenorAverage">—</div>
-      </div>
-    </div>
+  <div class="info-card">
+    <h3>تاريخ الاستحقاق</h3>
+    <p>التاريخ المحدد لانتهاء أجل الإذن وسداد قيمته الاسمية وفق شروط الإصدار.</p>
+  </div>
 
-    <div class="table-card">
-      <div class="table-heading">سجل العطاءات المنشورة</div>
+  <div class="info-card">
+    <h3>متوسط العائد</h3>
+    <p>متوسط العائد المنشور لنتيجة العطاء، كما يرد في جدول المصدر.</p>
+  </div>
 
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:25%">تاريخ الجلسة</th>
-              <th style="width:25%">تاريخ الإصدار</th>
-              <th style="width:25%">تاريخ الاستحقاق</th>
-              <th style="width:25%">متوسط العائد</th>
-            </tr>
-          </thead>
-          <tbody id="tenorTable"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <button class="back-btn" data-page="homePage">الرئيسية</button>
-  </section>
-
-  <!-- صفحة المقارنة والتحليل -->
-  <section class="page" id="analysisPage">
-    <h2 class="page-heading">مقارنة وتحليل الآجال</h2>
-
-    <div class="subheading">
-      مقارنة وفق النتائج المتاحة في مصدر البيانات
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">متوسط العائد المسجل لكل أجل</div>
-
-      <canvas id="yieldChart" class="chart-area"></canvas>
-
-      <div class="small-note">
-        يعرض الرسم متوسط القيم المسجلة في الشيت لكل أجل،
-        وليس توقعًا للعائد المستقبلي.
-      </div>
-    </div>
-
-    <div class="table-card comparison-table">
-      <div class="table-heading">ملخص البيانات حسب الأجل</div>
-
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:34%">الأجل</th>
-              <th style="width:33%">عدد النتائج</th>
-              <th style="width:33%">متوسط العائد</th>
-            </tr>
-          </thead>
-          <tbody id="analysisTable"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <button class="back-btn" data-page="homePage">الرئيسية</button>
-  </section>
-
-  <!-- دليل تواريخ أذون الخزانة -->
-  <section class="page" id="guidePage">
-    <h2 class="page-heading">دليل تواريخ أذون الخزانة</h2>
-
-    <div class="subheading">
-      شرح مبسط لقراءة بيانات العطاءات
-    </div>
-
-    <div class="info-scroll">
-
-      <div class="info-card">
-        <h3>١. تاريخ الجلسة</h3>
-        <p>
-          هو التاريخ الذي عُقد فيه عطاء أذون الخزانة،
-          وتُعرض النتائج وفق هذا التاريخ لتمييز كل عطاء عن غيره.
-        </p>
-      </div>
-
-      <div class="info-card">
-        <h3>٢. تاريخ الإصدار</h3>
-        <p>
-          هو التاريخ المحدد لبدء إصدار أذون الخزانة
-          وفق البيانات المنشورة للعطاء.
-        </p>
-      </div>
-
-      <div class="info-card">
-        <h3>٣. تاريخ الاستحقاق</h3>
-        <p>
-          هو التاريخ المحدد لانتهاء أجل الإذن،
-          وتتم التسوية عند الاستحقاق وفق الشروط المنظمة للإصدار.
-        </p>
-      </div>
-
-      <div class="info-card">
-        <h3>٤. متوسط العائد</h3>
-        <p>
-          هو متوسط العائد المرجح المنشور لنتائج العطاء.
-          وقد يختلف عن العائد الذي يحصل عليه مستثمر بعينه
-          بحسب سعر الشراء وتكاليف المعاملة والضرائب المطبقة.
-        </p>
-      </div>
-
-      <div class="info-card">
-        <h3>٥. كيف تقرأ الآجال؟</h3>
-        <p>
-          تُعرض الآجال بحسب البيانات المسجلة في المصدر،
-          مثل ٩١ و١٨٢ و٢٧٣ و٣٦٤ يومًا.
-          اعتمد على تاريخ الإصدار والاستحقاق المنشورين.
-        </p>
-      </div>
-
-      <div class="info-card">
-        <h3>ملاحظة مهمة</h3>
-        <p>
-          المؤشر يعرض البيانات المتاحة في جدول المصدر،
-          ولا يمثل توصية استثمارية أو ضمانًا لعائد مستقبلي.
-        </p>
-      </div>
-
-    </div>
-
-    <button class="back-btn" data-page="homePage">الرئيسية</button>
-  </section>
+  <div class="ad"></div>
+</section>
 
 </main>
 
-<!-- مساحة الإعلان داخل الإطار الذهبي -->
-<div class="ad-space" id="adSpace"></div>
-
-<footer>
-  <nav class="nav">
-    <button class="nav-btn active" data-page="homePage">
-      الرئيسية
-    </button>
-
-    <button class="nav-btn" data-page="analysisPage">
-      المقارنة
-    </button>
-
-    <button class="nav-btn" data-page="guidePage">
-      دليل التواريخ
-    </button>
-
-    <button class="nav-btn" id="refreshBtn">
-      تحديث البيانات
-    </button>
-  </nav>
+<footer class="footer">
+  <div class="developer">Developed by Tarek Metwally</div>
 </footer>
+
+<nav class="nav">
+  <button class="active" data-nav="home" onclick="go('home')">
+    <span>⌂</span>الرئيسية
+  </button>
+  <button data-nav="history" onclick="go('history')">
+    <span>▤</span>التاريخية
+  </button>
+  <button data-nav="guide" onclick="go('guide')">
+    <span>ⓘ</span>الدليل
+  </button>
+</nav>
 
 </div>
 
 <script>
+const csvUrl =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
 
-const CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQp4jGbTtNydAA3tCX7s3W_xhVPnMCkgiR-xpCvCFoNbhcta59z3sWQPwcCaPoO3FTEEEazLDaeoOjZ/pub?gid=0&single=true&output=csv";
+const TERMS = [
+  {key:"91",label:"91 يوم"},
+  {key:"182",label:"182 يوم"},
+  {key:"273",label:"273 يوم"},
+  {key:"364",label:"364 يوم"},
+  {key:"357",label:"357 يوم"},
+  {key:"other",label:"مدد أخرى"}
+];
 
-const KNOWN_TENORS = [91, 182, 273, 364, 357];
+let data = [];
+let selected = "182";
+let histSelected = "182";
 
-let records = [];
-let currentTenor = "91";
+function go(id){
+  document.querySelectorAll(".page").forEach(page=>{
+    page.classList.toggle("active",page.id===id);
+  });
 
-const $ = id => document.getElementById(id);
+  document.querySelectorAll(".nav button").forEach(button=>{
+    button.classList.toggle("active",button.dataset.nav===id);
+  });
 
-function normalizeDigits(value) {
-  const arabic = "٠١٢٣٤٥٦٧٨٩";
-  const persian = "۰۱۲۳۴۵۶۷۸۹";
+  if(id==="home") renderMain();
+  if(id==="history") renderHistory();
 
-  return String(value ?? "")
-    .replace(/[٠-٩]/g, c => arabic.indexOf(c))
-    .replace(/[۰-۹]/g, c => persian.indexOf(c))
-    .trim();
+  window.scrollTo({top:0,behavior:"auto"});
 }
 
-function parseCSV(text) {
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quoted = false;
+function parseCSV(text){
+  const rows=[];
+  let row=[],value="",quoted=false;
 
-  text = text.replace(/^\uFEFF/, "");
+  text=text.replace(/^\uFEFF/,"");
 
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
 
-    if (c === '"') {
-      if (quoted && text[i + 1] === '"') {
-        cell += '"';
+    if(c==='"'){
+      if(quoted && text[i+1]==='"'){
+        value+='"';
         i++;
-      } else {
-        quoted = !quoted;
+      }else{
+        quoted=!quoted;
       }
-    } else if (c === "," && !quoted) {
-      row.push(cell.trim());
-      cell = "";
-    } else if ((c === "\n" || c === "\r") && !quoted) {
-      if (c === "\r" && text[i + 1] === "\n") i++;
+    }else if(c==="," && !quoted){
+      row.push(value.trim());
+      value="";
+    }else if((c==="\n" || c==="\r") && !quoted){
+      if(c==="\r" && text[i+1]==="\n") i++;
+      row.push(value.trim());
 
-      row.push(cell.trim());
+      if(row.some(item=>item!=="")) rows.push(row);
 
-      if (row.some(v => v !== "")) rows.push(row);
-
-      row = [];
-      cell = "";
-    } else {
-      cell += c;
+      row=[];
+      value="";
+    }else{
+      value+=c;
     }
   }
 
-  row.push(cell.trim());
-  if (row.some(v => v !== "")) rows.push(row);
+  if(value!=="" || row.length){
+    row.push(value.trim());
+    if(row.some(item=>item!=="")) rows.push(row);
+  }
 
   return rows;
 }
 
-function parseYield(value) {
-  let s = normalizeDigits(value)
-    .replace(/[٪%]/g, "")
-    .replace(/٬/g, "")
-    .replace(/٫/g, ".")
-    .replace(/,/g, "")
-    .trim();
+function normalizeTerm(value){
+  const digits = String(value||"")
+    .replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)))
+    .replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)));
 
-  const n = Number(s);
-  return s !== "" && Number.isFinite(n) ? n : null;
+  const match=digits.trim().match(/\d+/);
+  return match ? match[0] : digits.trim();
 }
 
-function getTenor(value) {
-  const s = normalizeDigits(value);
-  const match = s.match(/\d+/);
-
-  return match ? Number(match[0]) : null;
+function isOther(termValue){
+  return !["91","182","273","364","357"].includes(termValue);
 }
 
-function dateSortValue(value) {
-  const s = normalizeDigits(value);
-  const d = new Date(s);
+function dateNum(value){
+  const s=String(value||"").trim();
+  let m=s.match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/);
 
-  if (!Number.isNaN(d.getTime())) return d.getTime();
+  if(m){
+    return new Date(+m[1],+m[2]-1,+m[3]).getTime();
+  }
 
-  const m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  m=s.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
 
-  if (m) {
-    return new Date(+m[3], +m[2] - 1, +m[1]).getTime();
+  if(m){
+    return new Date(+m[3],+m[2]-1,+m[1]).getTime();
   }
 
   return 0;
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
+function rowsFor(termValue){
+  return data
+    .filter(row=>termValue==="other"
+      ? isOther(row.term)
+      : row.term===termValue)
+    .slice()
+    .sort((a,b)=>dateNum(b.session)-dateNum(a.session));
+}
+
+function esc(value){
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
   })[c]);
 }
 
-function formatYield(value) {
-  return value === null || value === undefined
-    ? "—"
-    : value.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 3
-      }) + "%";
-}
+function drawTerms(containerId,selectedKey,callback){
+  const container=document.getElementById(containerId);
 
-function average(list) {
-  const values = list
-    .map(r => r.yield)
-    .filter(v => v !== null && Number.isFinite(v));
-
-  if (!values.length) return null;
-
-  return values.reduce((sum, v) => sum + v, 0) / values.length;
-}
-
-function setStatus(message, good = true) {
-  $("statusText").textContent = message;
-  $("statusDot").style.background = good ? "#c8a75a" : "#d66b5e";
-}
-
-function showEmpty(id, message) {
-  $(id).innerHTML =
-    '<tr><td colspan="4" class="empty">' +
-    escapeHTML(message) +
-    "</td></tr>";
-}
-
-function renderHome() {
-  $("totalRecords").textContent =
-    records.length.toLocaleString("en-US");
-
-  $("overallYield").textContent = formatYield(average(records));
-
-  const latest = records.slice(0, 7);
-
-  if (!latest.length) {
-    showEmpty("homeTable", "لا توجد بيانات متاحة حاليًا.");
-    return;
-  }
-
-  $("homeTable").innerHTML = latest.map(r => `
-    <tr>
-      <td>${escapeHTML(r.sessionDate || "—")}</td>
-      <td>${escapeHTML(r.issueDate || "—")}</td>
-      <td>${escapeHTML(r.maturityDate || "—")}</td>
-      <td class="yield">${formatYield(r.yield)}</td>
-    </tr>
+  container.innerHTML=TERMS.map(term=>`
+    <button class="term ${term.key===selectedKey?"active":""}"
+      data-term="${term.key}">
+      ${term.label}
+    </button>
   `).join("");
-}
 
-function getTenorRecords(tenor) {
-  if (tenor === "other") {
-    return records.filter(r => !KNOWN_TENORS.includes(r.tenor));
-  }
-
-  return records.filter(r => r.tenor === Number(tenor));
-}
-
-function openTenor(tenor) {
-  currentTenor = String(tenor);
-
-  const list = getTenorRecords(tenor);
-  const title = tenor === "other"
-    ? "مدد أخرى"
-    : `أذون الخزانة — ${tenor} يومًا`;
-
-  $("tenorTitle").textContent = title;
-  $("tenorSummary").textContent =
-    "النتائج مرتبة من الأحدث إلى الأقدم";
-
-  $("tenorCount").textContent =
-    list.length.toLocaleString("en-US");
-
-  $("tenorAverage").textContent = formatYield(average(list));
-
-  if (!list.length) {
-    showEmpty("tenorTable", "لا توجد نتائج مسجلة لهذا الأجل.");
-  } else {
-    $("tenorTable").innerHTML = list.slice(0, 200).map(r => `
-      <tr>
-        <td>${escapeHTML(r.sessionDate || "—")}</td>
-        <td>${escapeHTML(r.issueDate || "—")}</td>
-        <td>${escapeHTML(r.maturityDate || "—")}</td>
-        <td class="yield">${formatYield(r.yield)}</td>
-      </tr>
-    `).join("");
-  }
-
-  showPage("tenorPage");
-
-  document.querySelectorAll(".tenor-btn").forEach(btn => {
-    btn.classList.toggle("selected", btn.dataset.tenor === String(tenor));
+  container.querySelectorAll("button").forEach(button=>{
+    button.onclick=()=>callback(button.dataset.term);
   });
 }
 
-function renderAnalysis() {
-  const tenors = [...KNOWN_TENORS, "other"];
+function tableRows(rows){
+  if(!rows.length){
+    return `<tr><td colspan="4" class="message">
+      لا توجد نتائج مسجلة لهذا الأجل في البيانات المحمّلة.
+    </td></tr>`;
+  }
 
-  $("analysisTable").innerHTML = tenors.map(tenor => {
-    const list = getTenorRecords(tenor);
-    const title = tenor === "other"
-      ? "مدد أخرى"
-      : `${tenor} يومًا`;
+  return rows.map(row=>{
+    let yieldValue=String(row.yield||"").trim();
 
-    return `
-      <tr>
-        <td>${title}</td>
-        <td>${list.length.toLocaleString("en-US")}</td>
-        <td class="yield">${formatYield(average(list))}</td>
-      </tr>
-    `;
+    if(yieldValue && !yieldValue.includes("%")){
+      yieldValue+="%";
+    }
+
+    return `<tr>
+      <td class="session">${esc(row.session)}</td>
+      <td>${esc(row.issue)}</td>
+      <td>${esc(row.maturity)}</td>
+      <td class="yield">${esc(yieldValue)}</td>
+    </tr>`;
   }).join("");
-
-  drawChart();
 }
 
-function drawChart() {
-  const canvas = $("yieldChart");
-  if (!canvas) return;
-
-  const rect = canvas.getBoundingClientRect();
-  if (!rect.width || !rect.height) return;
-
-  const ratio = window.devicePixelRatio || 1;
-  canvas.width = Math.round(rect.width * ratio);
-  canvas.height = Math.round(rect.height * ratio);
-
-  const ctx = canvas.getContext("2d");
-  ctx.scale(ratio, ratio);
-
-  const w = rect.width;
-  const h = rect.height;
-  const data = [...KNOWN_TENORS, "other"].map(tenor => ({
-    label: tenor === "other" ? "أخرى" : String(tenor),
-    value: average(getTenorRecords(tenor))
-  })).filter(d => d.value !== null);
-
-  ctx.clearRect(0, 0, w, h);
-
-  if (!data.length) {
-    ctx.fillStyle = "#aaa69a";
-    ctx.font = "12px Tahoma";
-    ctx.textAlign = "center";
-    ctx.fillText("لا توجد بيانات كافية للرسم", w / 2, h / 2);
-    return;
-  }
-
-  const max = Math.max(...data.map(d => d.value), 1);
-  const padding = { top: 14, bottom: 28, left: 8, right: 8 };
-  const chartH = h - padding.top - padding.bottom;
-  const gap = 8;
-  const barW = Math.max(
-    8,
-    (w - padding.left - padding.right - gap * (data.length - 1))
-      / data.length
-  );
-
-  data.forEach((d, i) => {
-    const x = padding.left + i * (barW + gap);
-    const barH = (d.value / max) * chartH;
-    const y = padding.top + chartH - barH;
-
-    ctx.fillStyle = "#c8a75a";
-    ctx.fillRect(x, y, barW, barH);
-
-    ctx.fillStyle = "#e5ce8d";
-    ctx.font = "10px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(
-      d.value.toFixed(1) + "%",
-      x + barW / 2,
-      Math.max(10, y - 4)
-    );
-
-    ctx.fillStyle = "#ddd7c8";
-    ctx.fillText(
-      d.label,
-      x + barW / 2,
-      h - 8
-    );
+function renderMain(){
+  drawTerms("terms-main",selected,value=>{
+    selected=value;
+    renderMain();
   });
+
+  const rows=rowsFor(selected);
+  const termInfo=TERMS.find(term=>term.key===selected);
+
+  document.getElementById("main-title").textContent=
+    "سجل نتائج أجل "+termInfo.label;
+
+  document.getElementById("main-count").textContent=
+    rows.length+" نتيجة";
+
+  document.getElementById("main-body").innerHTML=tableRows(rows);
 }
 
-function showPage(pageId) {
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.toggle("active", page.id === pageId);
+function renderHistory(){
+  drawTerms("terms-history",histSelected,value=>{
+    histSelected=value;
+    renderHistory();
   });
 
-  document.querySelectorAll(".nav-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.page === pageId);
-  });
+  const rows=rowsFor(histSelected);
+  const termInfo=TERMS.find(term=>term.key===histSelected);
 
-  if (pageId === "analysisPage") {
-    requestAnimationFrame(drawChart);
-  }
+  document.getElementById("history-title").textContent=
+    "السجل التاريخي — "+termInfo.label;
+
+  document.getElementById("history-count").textContent=
+    rows.length+" نتيجة";
+
+  document.getElementById("history-body").innerHTML=tableRows(rows);
 }
 
-function convertRows(rows) {
-  return rows.slice(1).map(row => ({
-    timestamp: row[0] || "",
-    tenor: getTenor(row[1]),
-    sessionDate: row[2] || "",
-    issueDate: row[3] || "",
-    maturityDate: row[4] || "",
-    yield: parseYield(row[5])
-  })).filter(r =>
-    r.tenor !== null ||
-    r.sessionDate ||
-    r.issueDate ||
-    r.maturityDate ||
-    r.yield !== null
-  ).sort((a, b) => {
-    const ta = dateSortValue(a.timestamp) ||
-               dateSortValue(a.sessionDate);
-    const tb = dateSortValue(b.timestamp) ||
-               dateSortValue(b.sessionDate);
-    return tb - ta;
-  });
-}
+async function fetchData(){
+  const status=document.getElementById("status");
 
-async function loadData() {
-  setStatus("جاري التحديث");
+  status.textContent="● جاري تحديث البيانات";
+  status.style.color="#f1d86b";
 
-  $("lastUpdate").textContent = "جاري جلب أحدث البيانات...";
+  try{
+    const response=await fetch(csvUrl,{cache:"no-store"});
 
-  try {
-    const url = CSV_URL + "&cacheBust=" + Date.now();
-
-    const response = await fetch(url, {
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      throw new Error("تعذر الوصول إلى جدول البيانات");
+    if(!response.ok){
+      throw new Error("HTTP "+response.status);
     }
 
-    const text = await response.text();
-    const rows = parseCSV(text);
+    const text=await response.text();
 
-    if (rows.length < 2) {
-      throw new Error("جدول البيانات فارغ أو غير منشور");
+    if(text.trim().startsWith("<")){
+      throw new Error("المصدر لم يُرجع بيانات CSV");
     }
 
-    records = convertRows(rows);
+    const rows=parseCSV(text);
 
-    renderHome();
-    renderAnalysis();
+    if(rows.length<2){
+      throw new Error("لا توجد بيانات");
+    }
 
-    const now = new Date();
+    const newData=rows.slice(1)
+      .filter(row=>row.length>=6)
+      .map(row=>({
+        term:normalizeTerm(row[1]),
+        session:String(row[2]||"").trim(),
+        issue:String(row[3]||"").trim(),
+        maturity:String(row[4]||"").trim(),
+        yield:String(row[5]||"").trim()
+      }))
+      .filter(row=>row.term && row.session && row.yield);
 
-    $("lastUpdate").textContent =
-      "آخر تحديث ناجح: " +
-      now.toLocaleTimeString("ar-EG", {
-        hour: "2-digit",
-        minute: "2-digit"
+    data=newData;
+
+    status.textContent="● متصل بالمصدر";
+    status.style.color="#21d88a";
+
+    document.getElementById("updated").textContent=
+      "تحديث "+new Date().toLocaleTimeString("ar-EG",{
+        hour:"2-digit",
+        minute:"2-digit"
       });
 
-    setStatus("تم التحديث");
+    renderMain();
+    renderHistory();
 
-    if ($("tenorPage").classList.contains("active")) {
-      openTenor(currentTenor);
-    }
-
-  } catch (error) {
+  }catch(error){
     console.error(error);
-    setStatus("تعذر التحديث", false);
 
-    $("lastUpdate").textContent =
-      "تعذر تحديث البيانات؛ تحقق من الاتصال ونشر جدول Google Sheets.";
+    status.textContent="● تعذّر الاتصال بالمصدر";
+    status.style.color="#ff7777";
 
-    if (!records.length) {
-      showEmpty(
-        "homeTable",
-        "تعذر تحميل البيانات. تحقق من اتصال الإنترنت وإعدادات نشر الجدول."
-      );
-      $("totalRecords").textContent = "—";
-      $("overallYield").textContent = "—";
+    const message=`<tr><td colspan="4" class="message error">
+      تعذر تحميل البيانات. تأكد من نشر جدول Google Sheets للعامة بصيغة CSV.
+    </td></tr>`;
+
+    if(!data.length){
+      document.getElementById("main-body").innerHTML=message;
+      document.getElementById("history-body").innerHTML=message;
     }
   }
 }
 
-document.querySelectorAll(".tenor-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    openTenor(btn.dataset.tenor);
-  });
-});
-
-document.querySelectorAll("[data-page]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    showPage(btn.dataset.page);
-  });
-});
-
-$("refreshBtn").addEventListener("click", loadData);
-
-window.addEventListener("resize", () => {
-  if ($("analysisPage").classList.contains("active")) {
-    drawChart();
-  }
-});
-
-loadData();
-
-setInterval(loadData, 5 * 60 * 1000);
+renderMain();
+renderHistory();
+fetchData();
 </script>
+
 </body>
 </html>
-
