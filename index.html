@@ -41,59 +41,61 @@ button{font:inherit;cursor:pointer}
   flex-direction:column;
 }
 
-/* الهيدر: اللوجو بجوار العنوان وحالة الاتصال في الجانب الآخر */
+/* الهيدر */
 .header{
   direction:ltr;
   display:grid;
   grid-template-columns:48px minmax(0,1fr) auto;
   align-items:center;
-  gap:9px;
+  gap:8px;
   padding:12px 10px;
-  border-bottom:1px solid #352b10;
+  border-bottom:1px solid #777;
   min-width:0;
 }
 .logo{
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
   object-fit:contain;
   display:block;
 }
 .header-info{
   direction:rtl;
-  text-align:right;
+  text-align:center;
   min-width:0;
 }
 .brand{
-  font-size:clamp(15px,4vw,21px);
+  font-size:clamp(14px,3.8vw,21px);
   font-weight:800;
   color:var(--light);
   line-height:1.5;
+  text-align:center;
 }
 .group-name{
   font-size:11px;
   color:#eee8d8;
   margin-top:2px;
+  text-align:center;
 }
 .subtitle{
   font-size:9px;
   color:var(--muted);
   margin-top:3px;
   line-height:1.5;
+  text-align:center;
 }
 .status{
   direction:rtl;
   display:flex;
   align-items:center;
-  justify-content:flex-end;
-  gap:4px;
+  justify-content:center;
+  gap:3px;
   white-space:nowrap;
   font-size:9px;
   color:var(--green);
-  text-align:right;
+  text-align:center;
 }
-.status-dot{
-  font-size:10px;
-}
+.status-dot{font-size:10px}
+
 main{
   padding:9px 8px;
   flex:1;
@@ -101,6 +103,7 @@ main{
 }
 .page{display:none}
 .page.active{display:block}
+
 .actions{
   display:grid;
   grid-template-columns:1fr;
@@ -221,6 +224,8 @@ td.yield{color:var(--green);font-weight:800}
   text-align:center;
 }
 .message.error{color:var(--red)}
+
+/* منطقة الإعلان دون كتابة */
 .ad{
   margin:10px 0 5px;
   min-height:50px;
@@ -228,6 +233,7 @@ td.yield{color:var(--green);font-weight:800}
   border-radius:10px;
   background:#0c0c0a;
 }
+
 .info-card{
   margin:8px 0;
   border:1px solid var(--line);
@@ -254,6 +260,8 @@ td.yield{color:var(--green);font-weight:800}
   font-size:9px;
   color:#8e8a80;
 }
+
+/* الأيقونات الثلاثة في صف واحد */
 .nav{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -281,6 +289,7 @@ td.yield{color:var(--green);font-weight:800}
   background:#211b08;
   color:var(--light);
 }
+
 @media(max-width:360px){
   body{padding:3px}
   .app{
@@ -289,13 +298,13 @@ td.yield{color:var(--green);font-weight:800}
   }
   main{padding:7px 5px}
   .header{
-    grid-template-columns:39px minmax(0,1fr) auto;
-    gap:6px;
-    padding:10px 6px;
+    grid-template-columns:36px minmax(0,1fr) auto;
+    gap:5px;
+    padding:10px 5px;
   }
-  .logo{width:37px;height:37px}
-  .brand{font-size:14px}
-  .group-name{font-size:10px}
+  .logo{width:35px;height:35px}
+  .brand{font-size:13px}
+  .group-name{font-size:9px}
   .subtitle{font-size:8px}
   .status{font-size:8px;gap:2px}
   .heading{font-size:14px}
@@ -320,7 +329,9 @@ td.yield{color:var(--green);font-weight:800}
   <div class="header-info">
     <div class="brand">مؤشرات أذون الخزانة المصرية</div>
     <div class="group-name">جروب عملاء البنوك المصرية</div>
-    <div class="subtitle">متابعة نتائج العطاءات والعوائد وفق البيانات المنشورة بالمصدر</div>
+    <div class="subtitle">
+      متابعة نتائج العطاءات والعوائد وفق البيانات المنشورة بالمصدر
+    </div>
   </div>
 
   <div class="status" id="status">
@@ -331,6 +342,7 @@ td.yield{color:var(--green);font-weight:800}
 
 <main>
 
+<!-- الرئيسية -->
 <section class="page active" id="home">
 
   <div class="actions">
@@ -372,6 +384,7 @@ td.yield{color:var(--green);font-weight:800}
   <div class="ad"></div>
 </section>
 
+<!-- التاريخية -->
 <section class="page" id="history">
 
   <div class="actions">
@@ -411,6 +424,7 @@ td.yield{color:var(--green);font-weight:800}
   <div class="ad"></div>
 </section>
 
+<!-- الدليل -->
 <section class="page" id="guide">
 
   <div class="heading">دليل أذون الخزانة</div>
@@ -658,7 +672,8 @@ function renderHistory(){
 async function fetchData(){
   const status=document.getElementById("status");
 
-  status.innerHTML='<span class="status-dot">●</span><span>جاري التحديث</span>';
+  status.innerHTML=
+    '<span class="status-dot">●</span><span>جاري التحديث</span>';
   status.style.color="#f1d86b";
 
   try{
@@ -693,7 +708,8 @@ async function fetchData(){
 
     data=newData;
 
-    status.innerHTML='<span class="status-dot">●</span><span>متصل بالمصدر</span>';
+    status.innerHTML=
+      '<span class="status-dot">●</span><span>متصل بالمصدر</span>';
     status.style.color="#21d88a";
 
     document.getElementById("updated").textContent=
@@ -708,7 +724,8 @@ async function fetchData(){
   }catch(error){
     console.error(error);
 
-    status.innerHTML='<span class="status-dot">●</span><span>تعذّر الاتصال</span>';
+    status.innerHTML=
+      '<span class="status-dot">●</span><span>تعذّر الاتصال</span>';
     status.style.color="#ff7777";
 
     if(!data.length){
