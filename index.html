@@ -40,39 +40,59 @@ button{font:inherit;cursor:pointer}
   display:flex;
   flex-direction:column;
 }
+
+/* الهيدر: اللوجو بجوار العنوان وحالة الاتصال في الجانب الآخر */
 .header{
-  display:flex;
-  flex-direction:column;
+  direction:ltr;
+  display:grid;
+  grid-template-columns:48px minmax(0,1fr) auto;
   align-items:center;
-  text-align:center;
-  padding:10px 8px 8px;
+  gap:9px;
+  padding:12px 10px;
   border-bottom:1px solid #352b10;
+  min-width:0;
 }
 .logo{
-  width:54px;
-  height:54px;
+  width:46px;
+  height:46px;
   object-fit:contain;
-  margin-bottom:5px;
+  display:block;
+}
+.header-info{
+  direction:rtl;
+  text-align:right;
+  min-width:0;
 }
 .brand{
-  font-size:clamp(17px,4.8vw,23px);
+  font-size:clamp(15px,4vw,21px);
   font-weight:800;
   color:var(--light);
+  line-height:1.5;
 }
 .group-name{
-  font-size:12px;
+  font-size:11px;
   color:#eee8d8;
-  margin-top:3px;
+  margin-top:2px;
 }
 .subtitle{
-  font-size:10px;
+  font-size:9px;
   color:var(--muted);
   margin-top:3px;
+  line-height:1.5;
 }
 .status{
-  font-size:10px;
+  direction:rtl;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:4px;
+  white-space:nowrap;
+  font-size:9px;
   color:var(--green);
-  margin-top:6px;
+  text-align:right;
+}
+.status-dot{
+  font-size:10px;
 }
 main{
   padding:9px 8px;
@@ -263,12 +283,21 @@ td.yield{color:var(--green);font-weight:800}
 }
 @media(max-width:360px){
   body{padding:3px}
-  .app{min-height:calc(100dvh - 6px);border-radius:13px}
+  .app{
+    min-height:calc(100dvh - 6px);
+    border-radius:13px;
+  }
   main{padding:7px 5px}
-  .logo{width:46px;height:46px}
-  .brand{font-size:17px}
-  .group-name{font-size:11px}
-  .subtitle{font-size:9px}
+  .header{
+    grid-template-columns:39px minmax(0,1fr) auto;
+    gap:6px;
+    padding:10px 6px;
+  }
+  .logo{width:37px;height:37px}
+  .brand{font-size:14px}
+  .group-name{font-size:10px}
+  .subtitle{font-size:8px}
+  .status{font-size:8px;gap:2px}
   .heading{font-size:14px}
   .term{font-size:11px;min-height:35px}
   .table-title{font-size:11px}
@@ -281,17 +310,27 @@ td.yield{color:var(--green);font-weight:800}
 <div class="app">
 
 <header class="header">
-  <img class="logo" src="./logo.png" alt="شعار جروب عملاء البنوك المصرية"
-       onerror="this.style.display='none'">
-  <div class="brand">مؤشرات أذون الخزانة المصرية</div>
-  <div class="group-name">جروب عملاء البنوك المصرية</div>
-  <div class="subtitle">متابعة نتائج العطاءات والعوائد وفق البيانات المنشورة بالمصدر</div>
-  <div class="status" id="status">● جاري الاتصال بالمصدر</div>
+  <img
+    class="logo"
+    src="./logo.png"
+    alt="شعار جروب عملاء البنوك المصرية"
+    onerror="this.style.display='none'"
+  >
+
+  <div class="header-info">
+    <div class="brand">مؤشرات أذون الخزانة المصرية</div>
+    <div class="group-name">جروب عملاء البنوك المصرية</div>
+    <div class="subtitle">متابعة نتائج العطاءات والعوائد وفق البيانات المنشورة بالمصدر</div>
+  </div>
+
+  <div class="status" id="status">
+    <span class="status-dot">●</span>
+    <span>جاري الاتصال</span>
+  </div>
 </header>
 
 <main>
 
-<!-- الرئيسية: تتضمن محتوى المؤشر مباشرة -->
 <section class="page active" id="home">
 
   <div class="actions">
@@ -333,7 +372,6 @@ td.yield{color:var(--green);font-weight:800}
   <div class="ad"></div>
 </section>
 
-<!-- البيانات التاريخية -->
 <section class="page" id="history">
 
   <div class="actions">
@@ -341,7 +379,6 @@ td.yield{color:var(--green);font-weight:800}
   </div>
 
   <div class="heading">البيانات التاريخية</div>
-
   <p class="note">اختر أجلًا لعرض سجلاته المتاحة من المصدر.</p>
 
   <div class="terms" id="terms-history"></div>
@@ -374,7 +411,6 @@ td.yield{color:var(--green);font-weight:800}
   <div class="ad"></div>
 </section>
 
-<!-- الدليل -->
 <section class="page" id="guide">
 
   <div class="heading">دليل أذون الخزانة</div>
@@ -412,9 +448,11 @@ td.yield{color:var(--green);font-weight:800}
   <button class="active" data-nav="home" onclick="go('home')">
     <span>⌂</span>الرئيسية
   </button>
+
   <button data-nav="history" onclick="go('history')">
     <span>▤</span>التاريخية
   </button>
+
   <button data-nav="guide" onclick="go('guide')">
     <span>ⓘ</span>الدليل
   </button>
@@ -620,7 +658,7 @@ function renderHistory(){
 async function fetchData(){
   const status=document.getElementById("status");
 
-  status.textContent="● جاري تحديث البيانات";
+  status.innerHTML='<span class="status-dot">●</span><span>جاري التحديث</span>';
   status.style.color="#f1d86b";
 
   try{
@@ -655,7 +693,7 @@ async function fetchData(){
 
     data=newData;
 
-    status.textContent="● متصل بالمصدر";
+    status.innerHTML='<span class="status-dot">●</span><span>متصل بالمصدر</span>';
     status.style.color="#21d88a";
 
     document.getElementById("updated").textContent=
@@ -670,14 +708,14 @@ async function fetchData(){
   }catch(error){
     console.error(error);
 
-    status.textContent="● تعذّر الاتصال بالمصدر";
+    status.innerHTML='<span class="status-dot">●</span><span>تعذّر الاتصال</span>';
     status.style.color="#ff7777";
 
-    const message=`<tr><td colspan="4" class="message error">
-      تعذر تحميل البيانات. تأكد من نشر جدول Google Sheets للعامة بصيغة CSV.
-    </td></tr>`;
-
     if(!data.length){
+      const message=`<tr><td colspan="4" class="message error">
+        تعذر تحميل البيانات. تأكد من نشر جدول Google Sheets للعامة بصيغة CSV.
+      </td></tr>`;
+
       document.getElementById("main-body").innerHTML=message;
       document.getElementById("history-body").innerHTML=message;
     }
