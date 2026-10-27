@@ -6,25 +6,24 @@
 <meta name="theme-color" content="#080808">
 <title>مؤشرات أذون الخزانة المصرية</title>
 
-
 <style>
 :root{
-  --bg:#ffffff;
-  --panel:#ffffff;
-  --gold:#d5b13d;
-  --light:#080879;
-  --muted:#686868;
-  --line:#d5b13d;
-  --green:#16834f;
-  --red:#c62828;
+  --bg:#080808;
+  --panel:#12120f;
+  --gold:#d9b52e;
+  --light:#f1d86b;
+  --muted:#aaa69a;
+  --line:#4b3d13;
+  --green:#21d88a;
+  --red:#ff7777;
 }
 *{box-sizing:border-box}
 html,body{
   margin:0;
   min-height:100%;
   width:100%;
-  background:#ffffff;
-  color:#202020;
+  background:#000;
+  color:#f5f1e7;
   font-family:Tahoma,Arial,sans-serif;
 }
 body{padding:5px;line-height:1.45}
@@ -50,7 +49,7 @@ button{font:inherit;cursor:pointer}
   align-items:center;
   gap:8px;
   padding:12px 10px;
-  border-bottom:1px solid var(--gold);
+  border-bottom:1px solid #777;
   min-width:0;
 }
 .logo{
@@ -73,7 +72,7 @@ button{font:inherit;cursor:pointer}
 }
 .group-name{
   font-size:11px;
-  color:#333333;
+  color:#eee8d8;
   margin-top:2px;
   text-align:center;
 }
@@ -101,7 +100,6 @@ main{
   padding:9px 8px;
   flex:1;
   min-height:0;
-  background:#ffffff;
 }
 .page{display:none}
 .page.active{display:block}
@@ -113,8 +111,8 @@ main{
   margin-bottom:10px;
 }
 .btn,.term{
-  border:1px solid var(--gold);
-  background:#ffffff;
+  border:1px solid var(--line);
+  background:#141414;
   color:var(--light);
   border-radius:9px;
   font-weight:700;
@@ -124,9 +122,6 @@ main{
 .btn{
   min-height:39px;
   font-size:13px;
-}
-.btn:active{
-  background:#f5f0df;
 }
 .heading{
   display:flex;
@@ -157,16 +152,15 @@ main{
   padding:6px 2px;
 }
 .term.active{
-  background:var(--light);
-  color:#ffffff;
-  border-color:var(--gold);
+  background:var(--gold);
+  color:#111;
+  border-color:var(--light);
 }
-
 .table-card{
   border:1px solid var(--gold);
   border-radius:12px;
   overflow:hidden;
-  background:#ffffff;
+  background:#090909;
 }
 .table-title{
   display:flex;
@@ -174,15 +168,15 @@ main{
   align-items:center;
   gap:5px;
   padding:8px 7px;
-  background:var(--light);
-  border-bottom:1px solid var(--gold);
+  background:#12110d;
+  border-bottom:1px solid #33290f;
   font-size:12px;
   font-weight:700;
-  color:#ffffff;
+  color:var(--light);
 }
 .count{
   font-size:10px;
-  color:#f0e8c9;
+  color:var(--muted);
   white-space:nowrap;
   font-weight:400;
 }
@@ -192,7 +186,7 @@ main{
   overflow-x:auto;
   overscroll-behavior:contain;
   scrollbar-width:thin;
-  scrollbar-color:#d5b13d #f1f1f1;
+  scrollbar-color:#80691d #111;
 }
 table{
   width:100%;
@@ -205,26 +199,24 @@ th{
   position:sticky;
   top:0;
   z-index:1;
-  background:var(--light);
-  color:#ffffff;
+  background:#14264b;
+  color:#fff;
   font-size:clamp(9px,2.6vw,11px);
   padding:8px 2px;
-  border:1px solid var(--gold);
+  border:1px solid #293957;
   line-height:1.4;
   overflow-wrap:anywhere;
 }
 td{
-  background:#ffffff;
-  color:#222222;
   font-size:clamp(9px,2.65vw,12px);
   padding:9px 2px;
-  border:1px solid #e2d29a;
+  border:1px solid #29261e;
   line-height:1.4;
   overflow-wrap:anywhere;
 }
 th,td{width:25%}
-td.session{color:#333333}
-td.yield{color:#176b42;font-weight:800}
+td.session{color:#eee4c7}
+td.yield{color:var(--green);font-weight:800}
 .message{
   padding:18px 5px;
   color:var(--muted);
@@ -237,16 +229,16 @@ td.yield{color:#176b42;font-weight:800}
 .ad{
   margin:10px 0 5px;
   min-height:50px;
-  border:1px dashed #d8d0b8;
+  border:1px dashed #4b4532;
   border-radius:10px;
-  background:#ffffff;
+  background:#0c0c0a;
 }
 
 .info-card{
   margin:8px 0;
-  border:1px solid var(--gold);
+  border:1px solid var(--line);
   border-radius:10px;
-  background:#ffffff;
+  background:var(--panel);
   padding:10px 9px;
 }
 .info-card h3{
@@ -256,19 +248,17 @@ td.yield{color:#176b42;font-weight:800}
 }
 .info-card p{
   margin:0;
-  color:#333333;
   font-size:12px;
   line-height:1.8;
 }
 .footer{
   text-align:center;
-  background:#ffffff;
-  border-top:1px solid var(--gold);
+  border-top:1px solid #352b10;
   padding:6px;
 }
 .developer{
   font-size:9px;
-  color:#777777;
+  color:#8e8a80;
 }
 
 /* الأيقونات الثلاثة في صف واحد */
@@ -276,14 +266,13 @@ td.yield{color:#176b42;font-weight:800}
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:4px;
-  background:#ffffff;
-  border-top:1px solid var(--gold);
+  border-top:1px solid #352b10;
   padding:5px;
   padding-bottom:max(5px,env(safe-area-inset-bottom));
 }
 .nav button{
   background:transparent;
-  color:#555555;
+  color:#aaa394;
   border:0;
   border-radius:9px;
   padding:5px 2px;
@@ -297,7 +286,7 @@ td.yield{color:#176b42;font-weight:800}
   margin-bottom:3px;
 }
 .nav button.active{
-  background:#f5f0df;
+  background:#211b08;
   color:var(--light);
 }
 
@@ -324,6 +313,7 @@ td.yield{color:#176b42;font-weight:800}
   .nav button{font-size:10px;min-height:46px}
 }
 </style>
+</head>
 
 <body>
 <div class="app">
@@ -340,7 +330,7 @@ td.yield{color:#176b42;font-weight:800}
     <div class="brand">مؤشرات أذون الخزانة المصرية</div>
     <div class="group-name">جروب عملاء البنوك المصرية</div>
     <div class="subtitle">
-      متابعة نتائج العطاءات والعوائد وفق البيانات الرسمية
+      متابعة نتائج العطاءات والعوائد وفق البيانات المنشورة بالمصدر
     </div>
   </div>
 
@@ -402,7 +392,7 @@ td.yield{color:#176b42;font-weight:800}
   </div>
 
   <div class="heading">البيانات التاريخية</div>
-  <p class="note">اختر أجلًا لعرض سجلاته المتاحة  .</p>
+  <p class="note">اختر أجلًا لعرض سجلاته المتاحة من المصدر.</p>
 
   <div class="terms" id="terms-history"></div>
 
