@@ -6,24 +6,25 @@
 <meta name="theme-color" content="#080808">
 <title>مؤشرات أذون الخزانة المصرية</title>
 
+
 <style>
 :root{
-  --bg:#080808;
-  --panel:#12120f;
-  --gold:#d9b52e;
-  --light:#f1d86b;
-  --muted:#aaa69a;
-  --line:#4b3d13;
-  --green:#21d88a;
-  --red:#ff7777;
+  --bg:#f2f4f4;
+  --panel:#ffffff;
+  --gold:#d5b13d;
+  --light:#087d9c;
+  --muted:#68777c;
+  --line:#d5b13d;
+  --green:#16834f;
+  --red:#c62828;
 }
 *{box-sizing:border-box}
 html,body{
   margin:0;
   min-height:100%;
   width:100%;
-  background:#000;
-  color:#f5f1e7;
+  background:#e9eeee;
+  color:#263238;
   font-family:Tahoma,Arial,sans-serif;
 }
 body{padding:5px;line-height:1.45}
@@ -49,7 +50,8 @@ button{font:inherit;cursor:pointer}
   align-items:center;
   gap:8px;
   padding:12px 10px;
-  border-bottom:1px solid #777;
+  background:#087d9c;
+  border-bottom:2px solid var(--gold);
   min-width:0;
 }
 .logo{
@@ -66,19 +68,19 @@ button{font:inherit;cursor:pointer}
 .brand{
   font-size:clamp(14px,3.8vw,21px);
   font-weight:800;
-  color:var(--light);
+  color:#ffffff;
   line-height:1.5;
   text-align:center;
 }
 .group-name{
   font-size:11px;
-  color:#eee8d8;
+  color:#eaf8fb;
   margin-top:2px;
   text-align:center;
 }
 .subtitle{
   font-size:9px;
-  color:var(--muted);
+  color:#d5eaf0;
   margin-top:3px;
   line-height:1.5;
   text-align:center;
@@ -91,7 +93,7 @@ button{font:inherit;cursor:pointer}
   gap:3px;
   white-space:nowrap;
   font-size:9px;
-  color:var(--green);
+  color:#baf5d0;
   text-align:center;
 }
 .status-dot{font-size:10px}
@@ -100,6 +102,7 @@ main{
   padding:9px 8px;
   flex:1;
   min-height:0;
+  background:#f2f4f4;
 }
 .page{display:none}
 .page.active{display:block}
@@ -111,9 +114,9 @@ main{
   margin-bottom:10px;
 }
 .btn,.term{
-  border:1px solid var(--line);
-  background:#141414;
-  color:var(--light);
+  border:1px solid var(--gold);
+  background:#ffffff;
+  color:#087d9c;
   border-radius:9px;
   font-weight:700;
   padding:8px 5px;
@@ -133,7 +136,7 @@ main{
   border-right:3px solid var(--gold);
   font-size:16px;
   font-weight:800;
-  color:var(--light);
+  color:#087d9c;
 }
 .note{
   font-size:10px;
@@ -152,15 +155,16 @@ main{
   padding:6px 2px;
 }
 .term.active{
-  background:var(--gold);
-  color:#111;
-  border-color:var(--light);
+  background:#087d9c;
+  color:#ffffff;
+  border-color:var(--gold);
 }
+
 .table-card{
   border:1px solid var(--gold);
   border-radius:12px;
   overflow:hidden;
-  background:#090909;
+  background:#ffffff;
 }
 .table-title{
   display:flex;
@@ -168,15 +172,15 @@ main{
   align-items:center;
   gap:5px;
   padding:8px 7px;
-  background:#12110d;
-  border-bottom:1px solid #33290f;
+  background:#087d9c;
+  border-bottom:1px solid var(--gold);
   font-size:12px;
   font-weight:700;
-  color:var(--light);
+  color:#ffffff;
 }
 .count{
   font-size:10px;
-  color:var(--muted);
+  color:#e1f2f5;
   white-space:nowrap;
   font-weight:400;
 }
@@ -186,7 +190,7 @@ main{
   overflow-x:auto;
   overscroll-behavior:contain;
   scrollbar-width:thin;
-  scrollbar-color:#80691d #111;
+  scrollbar-color:#d5b13d #edf1f1;
 }
 table{
   width:100%;
@@ -199,23 +203,25 @@ th{
   position:sticky;
   top:0;
   z-index:1;
-  background:#14264b;
-  color:#fff;
+  background:#087d9c;
+  color:#ffffff;
   font-size:clamp(9px,2.6vw,11px);
   padding:8px 2px;
-  border:1px solid #293957;
+  border:1px solid #d5b13d;
   line-height:1.4;
   overflow-wrap:anywhere;
 }
 td{
+  background:#ffffff;
+  color:#263238;
   font-size:clamp(9px,2.65vw,12px);
   padding:9px 2px;
-  border:1px solid #29261e;
+  border:1px solid #e3d49f;
   line-height:1.4;
   overflow-wrap:anywhere;
 }
 th,td{width:25%}
-td.session{color:#eee4c7}
+td.session{color:#45565c}
 td.yield{color:var(--green);font-weight:800}
 .message{
   padding:18px 5px;
@@ -229,36 +235,38 @@ td.yield{color:var(--green);font-weight:800}
 .ad{
   margin:10px 0 5px;
   min-height:50px;
-  border:1px dashed #4b4532;
+  border:1px dashed #d5cda9;
   border-radius:10px;
-  background:#0c0c0a;
+  background:#ffffff;
 }
 
 .info-card{
   margin:8px 0;
-  border:1px solid var(--line);
+  border:1px solid var(--gold);
   border-radius:10px;
-  background:var(--panel);
+  background:#ffffff;
   padding:10px 9px;
 }
 .info-card h3{
   margin:0 0 5px;
-  color:var(--light);
+  color:#087d9c;
   font-size:13px;
 }
 .info-card p{
   margin:0;
+  color:#263238;
   font-size:12px;
   line-height:1.8;
 }
 .footer{
   text-align:center;
-  border-top:1px solid #352b10;
+  background:#ffffff;
+  border-top:1px solid var(--gold);
   padding:6px;
 }
 .developer{
   font-size:9px;
-  color:#8e8a80;
+  color:#68777c;
 }
 
 /* الأيقونات الثلاثة في صف واحد */
@@ -266,13 +274,14 @@ td.yield{color:var(--green);font-weight:800}
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:4px;
-  border-top:1px solid #352b10;
+  background:#ffffff;
+  border-top:1px solid var(--gold);
   padding:5px;
   padding-bottom:max(5px,env(safe-area-inset-bottom));
 }
 .nav button{
   background:transparent;
-  color:#aaa394;
+  color:#68777c;
   border:0;
   border-radius:9px;
   padding:5px 2px;
@@ -286,8 +295,8 @@ td.yield{color:var(--green);font-weight:800}
   margin-bottom:3px;
 }
 .nav button.active{
-  background:#211b08;
-  color:var(--light);
+  background:#e0f0f3;
+  color:#087d9c;
 }
 
 @media(max-width:360px){
@@ -313,6 +322,7 @@ td.yield{color:var(--green);font-weight:800}
   .nav button{font-size:10px;min-height:46px}
 }
 </style>
+
 </head>
 
 <body>
