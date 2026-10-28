@@ -9,22 +9,22 @@
 
 <style>
 :root{
-  --bg:#f2f4f4;
-  --panel:#ffffff;
+  --bg:#08758b;
+  --panel:#eef2f3;
   --gold:#d5b13d;
-  --light:#087d9c;
-  --muted:#68777c;
+  --light:#ffffff;
+  --muted:#d5e5e9;
   --line:#d5b13d;
-  --green:#16834f;
-  --red:#c62828;
+  --green:#b9f5d0;
+  --red:#ffc4c4;
 }
 *{box-sizing:border-box}
 html,body{
   margin:0;
   min-height:100%;
   width:100%;
-  background:#e9eeee;
-  color:#263238;
+  background:#07566b;
+  color:#ffffff;
   font-family:Tahoma,Arial,sans-serif;
 }
 body{padding:5px;line-height:1.45}
@@ -34,7 +34,7 @@ button{font:inherit;cursor:pointer}
   max-width:520px;
   min-height:calc(100dvh - 10px);
   margin:auto;
-  background:var(--bg);
+  background:#08758b;
   border:1.5px solid var(--gold);
   border-radius:17px;
   overflow:hidden;
@@ -50,8 +50,8 @@ button{font:inherit;cursor:pointer}
   align-items:center;
   gap:8px;
   padding:12px 10px;
-  background:#087d9c;
-  border-bottom:2px solid var(--gold);
+  background:#07566b;
+  border-bottom:1px solid var(--gold);
   min-width:0;
 }
 .logo{
@@ -74,13 +74,13 @@ button{font:inherit;cursor:pointer}
 }
 .group-name{
   font-size:11px;
-  color:#eaf8fb;
+  color:#f4d978;
   margin-top:2px;
   text-align:center;
 }
 .subtitle{
   font-size:9px;
-  color:#d5eaf0;
+  color:#d5e5e9;
   margin-top:3px;
   line-height:1.5;
   text-align:center;
@@ -93,7 +93,7 @@ button{font:inherit;cursor:pointer}
   gap:3px;
   white-space:nowrap;
   font-size:9px;
-  color:#baf5d0;
+  color:#b9f5d0;
   text-align:center;
 }
 .status-dot{font-size:10px}
@@ -102,7 +102,7 @@ main{
   padding:9px 8px;
   flex:1;
   min-height:0;
-  background:#f2f4f4;
+  background:#08758b;
 }
 .page{display:none}
 .page.active{display:block}
@@ -115,8 +115,8 @@ main{
 }
 .btn,.term{
   border:1px solid var(--gold);
-  background:#ffffff;
-  color:#087d9c;
+  background:#07566b;
+  color:#ffffff;
   border-radius:9px;
   font-weight:700;
   padding:8px 5px;
@@ -136,11 +136,11 @@ main{
   border-right:3px solid var(--gold);
   font-size:16px;
   font-weight:800;
-  color:#087d9c;
+  color:#ffffff;
 }
 .note{
   font-size:10px;
-  color:var(--muted);
+  color:#d5e5e9;
   font-weight:400;
 }
 .terms{
@@ -155,16 +155,16 @@ main{
   padding:6px 2px;
 }
 .term.active{
-  background:#087d9c;
-  color:#ffffff;
-  border-color:var(--gold);
+  background:var(--gold);
+  color:#173943;
+  border-color:#f5df8b;
 }
 
 .table-card{
   border:1px solid var(--gold);
   border-radius:12px;
   overflow:hidden;
-  background:#ffffff;
+  background:#eef2f3;
 }
 .table-title{
   display:flex;
@@ -172,7 +172,7 @@ main{
   align-items:center;
   gap:5px;
   padding:8px 7px;
-  background:#087d9c;
+  background:#07566b;
   border-bottom:1px solid var(--gold);
   font-size:12px;
   font-weight:700;
@@ -180,7 +180,7 @@ main{
 }
 .count{
   font-size:10px;
-  color:#e1f2f5;
+  color:#d5e5e9;
   white-space:nowrap;
   font-weight:400;
 }
@@ -190,7 +190,7 @@ main{
   overflow-x:auto;
   overscroll-behavior:contain;
   scrollbar-width:thin;
-  scrollbar-color:#d5b13d #edf1f1;
+  scrollbar-color:#d5b13d #dce5e7;
 }
 table{
   width:100%;
@@ -203,7 +203,7 @@ th{
   position:sticky;
   top:0;
   z-index:1;
-  background:#087d9c;
+  background:#08758b;
   color:#ffffff;
   font-size:clamp(9px,2.6vw,11px);
   padding:8px 2px;
@@ -212,61 +212,61 @@ th{
   overflow-wrap:anywhere;
 }
 td{
-  background:#ffffff;
-  color:#263238;
+  background:#eef2f3;
+  color:#24383d;
   font-size:clamp(9px,2.65vw,12px);
   padding:9px 2px;
-  border:1px solid #e3d49f;
+  border:1px solid #d3dfe2;
   line-height:1.4;
   overflow-wrap:anywhere;
 }
 th,td{width:25%}
-td.session{color:#45565c}
-td.yield{color:var(--green);font-weight:800}
+td.session{color:#354d53}
+td.yield{color:#147448;font-weight:800}
 .message{
   padding:18px 5px;
-  color:var(--muted);
+  color:#586b70;
   font-size:11px;
   text-align:center;
 }
-.message.error{color:var(--red)}
+.message.error{color:#c62828}
 
 /* منطقة الإعلان دون كتابة */
 .ad{
   margin:10px 0 5px;
   min-height:50px;
-  border:1px dashed #d5cda9;
+  border:1px dashed #d5b13d;
   border-radius:10px;
-  background:#ffffff;
+  background:#07566b;
 }
 
 .info-card{
   margin:8px 0;
   border:1px solid var(--gold);
   border-radius:10px;
-  background:#ffffff;
+  background:#eef2f3;
   padding:10px 9px;
 }
 .info-card h3{
   margin:0 0 5px;
-  color:#087d9c;
+  color:#08758b;
   font-size:13px;
 }
 .info-card p{
   margin:0;
-  color:#263238;
+  color:#24383d;
   font-size:12px;
   line-height:1.8;
 }
 .footer{
   text-align:center;
-  background:#ffffff;
+  background:#07566b;
   border-top:1px solid var(--gold);
   padding:6px;
 }
 .developer{
   font-size:9px;
-  color:#68777c;
+  color:#d5e5e9;
 }
 
 /* الأيقونات الثلاثة في صف واحد */
@@ -274,14 +274,14 @@ td.yield{color:var(--green);font-weight:800}
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:4px;
-  background:#ffffff;
+  background:#07566b;
   border-top:1px solid var(--gold);
   padding:5px;
   padding-bottom:max(5px,env(safe-area-inset-bottom));
 }
 .nav button{
   background:transparent;
-  color:#68777c;
+  color:#d5e5e9;
   border:0;
   border-radius:9px;
   padding:5px 2px;
@@ -295,8 +295,8 @@ td.yield{color:var(--green);font-weight:800}
   margin-bottom:3px;
 }
 .nav button.active{
-  background:#e0f0f3;
-  color:#087d9c;
+  background:#d5b13d;
+  color:#173943;
 }
 
 @media(max-width:360px){
@@ -322,6 +322,8 @@ td.yield{color:var(--green);font-weight:800}
   .nav button{font-size:10px;min-height:46px}
 }
 </style>
+
+
 
 </head>
 
