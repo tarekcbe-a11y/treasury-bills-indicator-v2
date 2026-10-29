@@ -7,34 +7,321 @@
 <title>مؤشرات أذون الخزانة المصرية</title>
 
 
-/* جسم الجدول: خلفية راقية وخط أوضح */
-table tbody tr {
-  background-color: #e4edf0;
+<style>
+:root{
+  --bg:#f2f4f4;
+  --panel:#ffffff;
+  --gold:#d5b13d;
+  --light:#087d9c;
+  --muted:#68777c;
+  --line:#d5b13d;
+  --green:#16834f;
+  --red:#c62828;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  width:100%;
+  background:#e9eeee;
+  color:#263238;
+  font-family:Tahoma,Arial,sans-serif;
+}
+body{padding:5px;line-height:1.45}
+button{font:inherit;cursor:pointer}
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:calc(100dvh - 10px);
+  margin:auto;
+  background:var(--bg);
+  border:1.5px solid var(--gold);
+  border-radius:17px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 
-/* خلايا البيانات */
-table tbody td {
-  color: #173744;
-  font-weight: 700;
-  border: 1px solid #b5c9d0;
+/* الهيدر */
+.header{
+  direction:ltr;
+  display:grid;
+  grid-template-columns:48px minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  padding:12px 10px;
+  background:#087d9c;
+  border-bottom:2px solid var(--gold);
+  min-width:0;
+}
+.logo{
+  width:44px;
+  height:44px;
+  object-fit:contain;
+  display:block;
+}
+.header-info{
+  direction:rtl;
+  text-align:center;
+  min-width:0;
+}
+.brand{
+  font-size:clamp(14px,3.8vw,21px);
+  font-weight:800;
+  color:#ffffff;
+  line-height:1.5;
+  text-align:center;
+}
+.group-name{
+  font-size:11px;
+  color:#eaf8fb;
+  margin-top:2px;
+  text-align:center;
+}
+.subtitle{
+  font-size:9px;
+  color:#d5eaf0;
+  margin-top:3px;
+  line-height:1.5;
+  text-align:center;
+}
+.status{
+  direction:rtl;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  white-space:nowrap;
+  font-size:9px;
+  color:#baf5d0;
+  text-align:center;
+}
+.status-dot{font-size:10px}
+
+main{
+  padding:9px 8px;
+  flex:1;
+  min-height:0;
+  background:#f2f4f4;
+}
+.page{display:none}
+.page.active{display:block}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:6px;
+  margin-bottom:10px;
+}
+.btn,.term{
+  border:1px solid var(--gold);
+  background:#ffffff;
+  color:#087d9c;
+  border-radius:9px;
+  font-weight:700;
+  padding:8px 5px;
+  min-width:0;
+}
+.btn{
+  min-height:39px;
+  font-size:13px;
+}
+.heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:5px;
+  margin:10px 0 8px;
+  padding-right:8px;
+  border-right:3px solid var(--gold);
+  font-size:16px;
+  font-weight:800;
+  color:#087d9c;
+}
+.note{
+  font-size:10px;
+  color:var(--muted);
+  font-weight:400;
+}
+.terms{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+  margin:9px 0 10px;
+}
+.term{
+  min-height:37px;
+  font-size:12px;
+  padding:6px 2px;
+}
+.term.active{
+  background:#087d9c;
+  color:#ffffff;
+  border-color:var(--gold);
 }
 
-/* فواصل واضحة بين السطور */
-table tbody tr + tr td {
-  border-top: 1px solid #a9c1c9;
+.table-card{
+  border:1px solid var(--gold);
+  border-radius:12px;
+  overflow:hidden;
+  background:#ffffff;
+}
+.table-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:5px;
+  padding:8px 7px;
+  background:#087d9c;
+  border-bottom:1px solid var(--gold);
+  font-size:12px;
+  font-weight:700;
+  color:#ffffff;
+}
+.count{
+  font-size:10px;
+  color:#e1f2f5;
+  white-space:nowrap;
+  font-weight:400;
+}
+.table-scroll{
+  height:clamp(210px,38dvh,330px);
+  overflow-y:auto;
+  overflow-x:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#d5b13d #edf1f1;
+}
+table{
+  width:100%;
+  min-width:300px;
+  border-collapse:collapse;
+  table-layout:fixed;
+  text-align:center;
+}
+th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#087d9c;
+  color:#ffffff;
+  font-size:clamp(9px,2.6vw,11px);
+  padding:8px 2px;
+  border:1px solid #d5b13d;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+td{
+  background:#ffffff;
+  color:#263238;
+  font-size:clamp(9px,2.65vw,12px);
+  padding:9px 2px;
+  border:1px solid #e3d49f;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+th,td{width:25%}
+td.session{color:#45565c}
+td.yield{color:var(--green);font-weight:800}
+.message{
+  padding:18px 5px;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
+}
+.message.error{color:var(--red)}
+
+/* منطقة الإعلان دون كتابة */
+.ad{
+  margin:10px 0 5px;
+  min-height:50px;
+  border:1px dashed #d5cda9;
+  border-radius:10px;
+  background:#ffffff;
 }
 
-/* تأثير هادئ عند المرور على السطر */
-table tbody tr:hover td {
-  background-color: #d5e5e9;
+.info-card{
+  margin:8px 0;
+  border:1px solid var(--gold);
+  border-radius:10px;
+  background:#ffffff;
+  padding:10px 9px;
+}
+.info-card h3{
+  margin:0 0 5px;
+  color:#087d9c;
+  font-size:13px;
+}
+.info-card p{
+  margin:0;
+  color:#263238;
+  font-size:12px;
+  line-height:1.8;
+}
+.footer{
+  text-align:center;
+  background:#ffffff;
+  border-top:1px solid var(--gold);
+  padding:6px;
+}
+.developer{
+  font-size:9px;
+  color:#68777c;
 }
 
-/* رأس الجدول يظل كما هو */
-table thead th {
-  /* لا تغيّر تنسيق الرأس الحالي */
+/* الأيقونات الثلاثة في صف واحد */
+.nav{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:4px;
+  background:#ffffff;
+  border-top:1px solid var(--gold);
+  padding:5px;
+  padding-bottom:max(5px,env(safe-area-inset-bottom));
+}
+.nav button{
+  background:transparent;
+  color:#68777c;
+  border:0;
+  border-radius:9px;
+  padding:5px 2px;
+  font-size:11px;
+  min-height:49px;
+}
+.nav button span{
+  display:block;
+  font-size:18px;
+  line-height:1.2;
+  margin-bottom:3px;
+}
+.nav button.active{
+  background:#e0f0f3;
+  color:#087d9c;
 }
 
-
+@media(max-width:360px){
+  body{padding:3px}
+  .app{
+    min-height:calc(100dvh - 6px);
+    border-radius:13px;
+  }
+  main{padding:7px 5px}
+  .header{
+    grid-template-columns:36px minmax(0,1fr) auto;
+    gap:5px;
+    padding:10px 5px;
+  }
+  .logo{width:35px;height:35px}
+  .brand{font-size:13px}
+  .group-name{font-size:9px}
+  .subtitle{font-size:8px}
+  .status{font-size:8px;gap:2px}
+  .heading{font-size:14px}
+  .term{font-size:11px;min-height:35px}
+  .table-title{font-size:11px}
+  .nav button{font-size:10px;min-height:46px}
+}
+</style>
 
 </head>
 
